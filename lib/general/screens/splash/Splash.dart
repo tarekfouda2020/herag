@@ -27,8 +27,6 @@ class _SplashState extends State<Splash> {
   _checkingData()async{
    GlobalNotification.instance.setupNotification(context: context);
     Utils.manipulateSplashData(context);
-
-
   }
 
 
@@ -44,17 +42,11 @@ class _SplashState extends State<Splash> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            AnimationContainer(
-              distance: 500,
-              index: 0,
-              duration: Duration(seconds: 2),
-              vertical: true,
-              child: Image(
-                width: 250,
-                height: MediaQuery.of(context).size.width,
-                image: AssetImage(Res.logoWhite),
-                fit: BoxFit.contain,
-              ),
+            Image(
+              width: 250,
+              height: MediaQuery.of(context).size.width,
+              image: AssetImage(Res.logoWhite),
+              fit: BoxFit.contain,
             ),
             Positioned(
               bottom: 0,

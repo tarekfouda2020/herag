@@ -15,7 +15,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
    <application
         android:label="حراج اوامر"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyDIBH6mfPQ13UnF9aZtmaUQtuu-mQcxxb0"/>
        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">

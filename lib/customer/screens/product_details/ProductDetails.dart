@@ -57,7 +57,7 @@ class _ProductDetailsState extends State<ProductDetails> with ProDetailsData {
                     ),
                   ),
                   Offstage(
-                    offstage: state.model.adsData.closeReply,
+                    offstage: !state.model.adsData.closeReply||!context.read<AuthCubit>().state.authorized,
                     child: _buildAddCommentInput(),
                   )
                 ],

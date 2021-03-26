@@ -28,48 +28,45 @@ class FollowedCars extends StatelessWidget {
   }
 
   Widget _buildCarItem(int index,BuildContext context){
-    return AnimationContainer(
-      scale: true,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: Slidable(
-          actionPane: SlidableDrawerActionPane(),
-          actionExtentRatio: 0.25,
-          child: InkWell(
-            onTap: ()=>AutoRouter.of(context).push(AddCarFollowerRoute()),
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Slidable(
+        actionPane: SlidableDrawerActionPane(),
+        actionExtentRatio: 0.25,
+        child: InkWell(
+          onTap: ()=>AutoRouter.of(context).push(AddCarFollowerRoute()),
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
 
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                  boxShadow: [
-                    BoxShadow(
-                        color: MyColors.greyWhite,
-                        blurRadius: 1.2,
-                        spreadRadius: 1.2
-                    )
-                  ]
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MyText(title: "كورلا",size: 11,color: MyColors.blackOpacity,),
-                  MyText(title: "2020",size: 11,color: MyColors.blackOpacity,),
-                  MyText(title: "الرياض",size: 11,color: MyColors.blackOpacity,),
-                ],
-              ),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+                boxShadow: [
+                  BoxShadow(
+                      color: MyColors.greyWhite,
+                      blurRadius: 1.2,
+                      spreadRadius: 1.2
+                  )
+                ]
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MyText(title: "كورلا",size: 11,color: MyColors.blackOpacity,),
+                MyText(title: "2020",size: 11,color: MyColors.blackOpacity,),
+                MyText(title: "الرياض",size: 11,color: MyColors.blackOpacity,),
+              ],
             ),
           ),
-          secondaryActions: <Widget>[
-            IconSlideAction(
-              caption: 'Remove',
-              color: Colors.red,
-              icon: Icons.delete,
-              onTap: (){},
-            ),
-          ],
         ),
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: 'Remove',
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: (){},
+          ),
+        ],
       ),
     );
   }

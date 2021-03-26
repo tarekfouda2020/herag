@@ -40,10 +40,9 @@ class ProDetailsData {
   void navigateToComments(BuildContext context, AdsDataModel data) async {
     var auth = context.read<AuthCubit>().state.authorized;
     if (auth) {
-      var comments = await ExtendedNavigator.of(context).push(
-          ProductCommentsRoute.name,
-          arguments: ProductCommentsRouteArgs(
-              adsId: data.id, hideReply: data.closeReply));
+      var comments = await Navigator.of(context).push(CupertinoPageRoute(
+          builder: (cxt)=>ProductComments(adsId: data.id, hideReply: data.closeReply)))
+      ;
       if (comments != null) {
         commentCubit.onSetCommentsList(comments);
       }

@@ -14,12 +14,8 @@ class LoginData{
       loginCubit.onchangeLoginLoading();
       String phoneEn = Utils.convertDigitsToLatin(phone.text);
       String passEn = Utils.convertDigitsToLatin(pass.text);
-      bool result= await GeneralRepository(context).setUserLogin(phoneEn, passEn);
+       await GeneralRepository(context).setUserLogin(phoneEn, passEn);
       loginCubit.onchangeLoginLoading();
-      if(result){
-        context.read<AuthCubit>().onUpdateAuth(true);
-        AutoRouter.of(context).push(HomeRoute());
-      }
 
     }
 

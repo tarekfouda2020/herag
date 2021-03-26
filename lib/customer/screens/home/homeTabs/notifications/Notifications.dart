@@ -81,41 +81,38 @@ class _NotificationsState extends State<Notifications> with NotificationsData {
   }
 
   _buildNotifyItem({int index,NotifyModel model}){
-    return AnimationContainer(
-      scale: true,
-      child: InkWell(
-        onTap: ()=> navigateToDetails(context,model),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
-          decoration: BoxDecoration(
-              color: index.isEven?MyColors.white:MyColors.greyWhite,
-              border: Border(
-                  bottom: BorderSide(color: MyColors.greyWhite,width: 1)
-              )
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  MyText(
-                    title: model.text,
-                    size: 10,
-                    color: MyColors.blackOpacity,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  MyText(
-                    title: model.date,
-                    size: 9,
-                    color: MyColors.blackOpacity,
-                  ),
-                ],
-              ),
-            ],
-          ),
+    return InkWell(
+      onTap: ()=> navigateToDetails(context,model),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+        decoration: BoxDecoration(
+            color: index.isEven?MyColors.white:MyColors.greyWhite,
+            border: Border(
+                bottom: BorderSide(color: MyColors.greyWhite,width: 1)
+            )
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                MyText(
+                  title: model.text,
+                  size: 10,
+                  color: MyColors.blackOpacity,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                MyText(
+                  title: model.date,
+                  size: 9,
+                  color: MyColors.blackOpacity,
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

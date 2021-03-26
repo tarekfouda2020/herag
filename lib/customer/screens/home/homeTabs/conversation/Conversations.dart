@@ -67,53 +67,50 @@ class _ConversationsState extends State<Conversations> with ConversationData {
   }
 
   _buildChatItem({int index,ChatModel model,UserModel user}){
-    return AnimationContainer(
-      scale: true,
-      child: InkWell(
-        onTap: ()=>AutoRouter.of(context).push(ChatRoute(receiverId: model.userId,userName: model.userName,senderId: user.id)
-        ),
-        child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-            decoration: BoxDecoration(
-                color: index.isEven?MyColors.white:MyColors.greyWhite,
-                border: Border(
-                    bottom: BorderSide(color: MyColors.greyWhite,width: 1)
-                )
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    CachedImage(
-                      url: model.image,
-                      width: 40,
-                      height: 40,
-                      haveRadius: false,
-                      fit: BoxFit.cover,
-                      boxShape: BoxShape.circle,
-                    ),                    SizedBox(width: 5,),
-                    MyText(title: model.userName ,size: 10,color: MyColors.black,),
-                    Spacer(),
-                    MyText(title: model.date ,size: 8,color: MyColors.blackOpacity,),
+    return InkWell(
+      onTap: ()=>AutoRouter.of(context).push(ChatRoute(receiverId: model.userId,userName: model.userName,senderId: user.id)
+      ),
+      child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+          decoration: BoxDecoration(
+              color: index.isEven?MyColors.white:MyColors.greyWhite,
+              border: Border(
+                  bottom: BorderSide(color: MyColors.greyWhite,width: 1)
+              )
+          ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  CachedImage(
+                    url: model.image,
+                    width: 40,
+                    height: 40,
+                    haveRadius: false,
+                    fit: BoxFit.cover,
+                    boxShape: BoxShape.circle,
+                  ),                    SizedBox(width: 5,),
+                  MyText(title: model.userName ,size: 10,color: MyColors.black,),
+                  Spacer(),
+                  MyText(title: model.date ,size: 8,color: MyColors.blackOpacity,),
 
+                ],
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    MyText(
+                      title: model.lastMessage,
+                      size: 8,
+                      color: MyColors.blackOpacity,
+                    ),
                   ],
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    children: [
-                      MyText(
-                        title: model.lastMessage,
-                        size: 8,
-                        color: MyColors.blackOpacity,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            )
-        ),
+              ),
+            ],
+          )
       ),
     );
   }

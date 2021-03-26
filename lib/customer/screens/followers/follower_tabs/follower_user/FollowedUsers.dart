@@ -50,48 +50,45 @@ class _FollowedUsersState extends State<FollowedUsers> {
   }
 
   Widget _buildUserView(UserFollowerModel model){
-    return AnimationContainer(
-      scale: true,
-      child: InkWell(
-        onTap: ()=>AutoRouter.of(context).push(UserProductsRoute(userId: model.fKUserFollow,userName: model.userName)),
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
-          margin: EdgeInsets.only(top: 10),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
-              boxShadow: [
-                BoxShadow(
-                    color: MyColors.greyWhite,
-                    blurRadius: 1.2,
-                    spreadRadius: 1.2
-                )
-              ]
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.person_outline,size: 20,color: MyColors.black,),
-                        SizedBox(width: 5,),
-                        MyText(title: model.userName ,size: 10,color: MyColors.black,),
-                      ],
-                    ),
-                    MyText(title:model.date,size: 10,color: MyColors.blackOpacity,)
-                  ],
-                ),
-              ),
-              RaisedButton(
-                onPressed: ()=>_buildConfirmRemoveFollowUser(model),
-                child: MyText(title: "الغاء المتابعة",size: 10,color: MyColors.white,),
-                color: Colors.red,
+    return InkWell(
+      onTap: ()=>AutoRouter.of(context).push(UserProductsRoute(userId: model.fKUserFollow,userName: model.userName)),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
+        margin: EdgeInsets.only(top: 10),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            boxShadow: [
+              BoxShadow(
+                  color: MyColors.greyWhite,
+                  blurRadius: 1.2,
+                  spreadRadius: 1.2
               )
-            ],
-          ),
+            ]
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.person_outline,size: 20,color: MyColors.black,),
+                      SizedBox(width: 5,),
+                      MyText(title: model.userName ,size: 10,color: MyColors.black,),
+                    ],
+                  ),
+                  MyText(title:model.date,size: 10,color: MyColors.blackOpacity,)
+                ],
+              ),
+            ),
+            RaisedButton(
+              onPressed: ()=>_buildConfirmRemoveFollowUser(model),
+              child: MyText(title: "الغاء المتابعة",size: 10,color: MyColors.white,),
+              color: Colors.red,
+            )
+          ],
         ),
       ),
     );

@@ -47,10 +47,11 @@ class GlobalNotification {
       provisional: false,
       sound: true,
     );
+    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(alert: true,badge: true,sound: true);
+    messaging.getInitialMessage().then((message) => _showLocalNotification(message, _id));
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("_____________________Message data:${message.data}");
       print("_____________________notification:${message.notification}");
-      print('Message data: ${message.data}');
+      print("_____________________Message data:${message.data}");
       _id++;
       _showLocalNotification(message, _id);
       _onMessageStreamController.add(message.data);
@@ -81,13 +82,13 @@ class GlobalNotification {
   }
 
   _showLocalNotification(RemoteMessage message, id) async {
-
-    int _type = int.parse(message.data["type"]??"0");
-    if(_type==9){
-      _context.read<ChatCountCubit>().onUpdateCount(_context.read<ChatCountCubit>().state.count+1);
-    }else{
-      _context.read<NotifyCountCubit>().onUpdateCount(_context.read<NotifyCountCubit>().state.count+1);
-    }
+    if (message == null || message.notification == null) return;
+    // int _type = int.parse(message.data["type"]??"0");
+    // if(_type==9){
+    //   _context.read<ChatCountCubit>().onUpdateCount(_context.read<ChatCountCubit>().state.count+1);
+    // }else{
+    //   _context.read<NotifyCountCubit>().onUpdateCount(_context.read<NotifyCountCubit>().state.count+1);
+    // }
 
     var android = AndroidNotificationDetails(
       "${DateTime.now()}",
