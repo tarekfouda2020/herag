@@ -105,7 +105,7 @@ class _RegisterState extends State<Register>{
                                   children: [
                                     Checkbox(value: state.terms, onChanged: (val)=>registerCubit.onChangeTermsState()),
                                     InkWell(
-                                        onTap: ()=> AutoRouter.of(context).pushPath(TermsRoute.name),
+                                        onTap: ()=> AutoRouter.of(context).push(TermsRoute()),
                                         child: MyText(title: "اوافق علي الشروط والأحكام",size: 10,color: MyColors.blackOpacity,)
                                     ),
                                   ],

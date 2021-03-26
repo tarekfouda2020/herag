@@ -87,7 +87,7 @@ class _LoginState extends State<Login> with LoginData{
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           InkWell(
-                            onTap: () => AutoRouter.of(context).pushPath(ForgetPasswordRoute.name),
+                            onTap: () => AutoRouter.of(context).push(ForgetPasswordRoute()),
                             child: MyText(
                               title: "${tr(context,"forgetPassword")}",
                               size: 10,
@@ -146,7 +146,7 @@ class _LoginState extends State<Login> with LoginData{
                             width: 5,
                           ),
                           InkWell(
-                              onTap: ()=>AutoRouter.of(context).pushPath(RegisterRoute.name),
+                              onTap: ()=>AutoRouter.of(context).push(RegisterRoute()),
                               child: MyText(
                                 title: tr(context,"register"),
                                 size: 12,

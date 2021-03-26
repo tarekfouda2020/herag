@@ -183,7 +183,7 @@ class OfferDetailsData{
     CustomerRepository(context).setAddOffer(model).then((value) {
       if(value){
         AutoRouter.of(context).popUntilRouteWithName(HomeRoute.name);
-        AutoRouter.of(context).pushPath(AddOfferSuccessRoute.name);
+        AutoRouter.of(context).push(AddOfferSuccessRoute());
       }
     });
 

@@ -56,19 +56,19 @@ class _DropdownTextFieldState<DataType> extends State<DropdownTextField> {
               borderRadius: BorderRadius.circular(10)
           ),
           contentPadding: EdgeInsets.symmetric(horizontal: 10),
-          labelText: "Search",
+          labelText: "بحث",
         ),
         popupTitle: Container(
           height: 50,
           decoration: BoxDecoration(
-            color: MyColors.secondary,
+            color: Theme.of(context).primaryColorDark,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
             ),
           ),
           child: Center(
-            child: MyText(title: widget.label,size: 16,color: MyColors.white,),
+            child: MyText(title: widget.label,size: 14,color: MyColors.white,),
           ),
         ),
         popupShape: RoundedRectangleBorder(
@@ -85,10 +85,10 @@ class _DropdownTextFieldState<DataType> extends State<DropdownTextField> {
           contentPadding: EdgeInsets.only(right: 10),
         ),
         hintStyle: GoogleFonts.cairo(fontSize: 14,),
-        labelStyle: GoogleFonts.roboto(fontSize: 18),
-        inputStyle: GoogleFonts.roboto(fontSize: 20,color: Colors.black),
+        labelStyle: GoogleFonts.cairo(fontSize: widget.labelSize?? 14),
+        inputStyle: GoogleFonts.cairo(fontSize: widget.fontSize?? 14,color: Colors.black.withOpacity(.7)),
 
-    ),
+      ),
     );
   }
 

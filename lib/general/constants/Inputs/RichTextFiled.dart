@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:base_flutter/general/constants/MyColors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class RichTextFiled extends StatelessWidget{
 
@@ -32,18 +31,19 @@ class RichTextFiled extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return Container(
       height: height,
       margin: margin,
       child: TextFormField(
         controller: controller,
-        keyboardType: type??TextInputType.multiline,
+        keyboardType: type,
         textInputAction: action?? TextInputAction.done,
         onFieldSubmitted: submit,
         minLines: min,
         maxLines: max,
         readOnly: readOnly,
-        style: GoogleFonts.roboto(fontSize: 20,color: Colors.black),
+        style: TextStyle(fontSize: 14,fontFamily: "cairo",color: Colors.black.withOpacity(.7)),
         validator: (value)=> validate(value),
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
@@ -62,13 +62,12 @@ class RichTextFiled extends StatelessWidget{
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: Colors.red,width: 2)
             ),
-            errorStyle: GoogleFonts.roboto(fontSize: 14),
-            labelText: "  $label  ",
-            alignLabelWithHint: true,
-            labelStyle: GoogleFonts.roboto(fontSize: 18),
+            errorStyle: TextStyle(fontFamily: "cairo",fontSize: 10),
+            hintText: "$label",
+            hintStyle: TextStyle(fontFamily: "cairo",fontSize: 14),
             fillColor: fillColor?? MyColors.white,
-            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            filled: true
+          contentPadding: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
+          filled: true
         ),
       ),
     );

@@ -37,22 +37,22 @@ class StartDrawer extends StatelessWidget {
                         color: Colors.white,
                         title: "اهلا ${user.userName}",
                         iconData: FontAwesomeIcons.userAlt,
-                        onTap: ()=> AutoRouter.of(context).pushPath(ProfileRoute.name)
+                        onTap: ()=> AutoRouter.of(context).push(ProfileRoute())
                     ),
                     _buildListViewItem(
                         title: "اضف اعلانك",
                         iconData: FontAwesomeIcons.plus,
-                        onTap: ()=> AutoRouter.of(context).pushPath(AddOffersRoute.name)
+                        onTap: ()=> AutoRouter.of(context).push(AddOffersRoute())
                     ),
                     _buildListViewItem(
                         title: "اعلاناتي",
                         iconData: FontAwesomeIcons.pager,
-                        onTap: ()=> AutoRouter.of(context).pushPath(MyProductsRoute.name)
+                        onTap: ()=> AutoRouter.of(context).push(MyProductsRoute())
                     ),
                     _buildListViewItem(
                         title: "قائمة المتابعة",
                         iconData: FontAwesomeIcons.users,
-                        onTap: ()=> AutoRouter.of(context).pushPath(FollowersRoute.name)
+                        onTap: ()=> AutoRouter.of(context).push(FollowersRoute())
                     ),
                     Visibility(
                       visible: context.watch<ShowPayCubit>().state.show,
@@ -61,12 +61,12 @@ class StartDrawer extends StatelessWidget {
                           _buildListViewItem(
                               title: "الحسابات البنكية",
                               iconData: FontAwesomeIcons.idCard,
-                              onTap: ()=> AutoRouter.of(context).pushPath(AdminBanksRoute.name)
+                              onTap: ()=> AutoRouter.of(context).push(AdminBanksRoute())
                           ),
                           _buildListViewItem(
                               title: "دفع العمولة",
                               iconData: FontAwesomeIcons.coins,
-                              onTap: ()=> AutoRouter.of(context).pushPath(BankPaymentRoute.name)
+                              onTap: ()=> AutoRouter.of(context).push(BankPaymentRoute())
                           ),
                         ],
                       ),
@@ -75,7 +75,7 @@ class StartDrawer extends StatelessWidget {
                     _buildListViewItem(
                         title: "تواصل معنا",
                         iconData: FontAwesomeIcons.phone,
-                        onTap: ()=> AutoRouter.of(context).pushPath(CallUsRoute.name)
+                        onTap: ()=> AutoRouter.of(context).push(CallUsRoute())
                     ),
                     Divider(color: MyColors.blackOpacity,height: 20,thickness: .5,),
                   ],
@@ -97,7 +97,7 @@ class StartDrawer extends StatelessWidget {
                     title: "تسجيل دخول",
                     iconData: FontAwesomeIcons.signInAlt,
                     textColor: Colors.red,
-                    onTap: ()=>AutoRouter.of(context).pushPath(LoginRoute.name)
+                    onTap: ()=>AutoRouter.of(context).popAndPush(LoginRoute())
                 ),
               ),
             ],

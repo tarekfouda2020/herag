@@ -289,7 +289,6 @@ class DropdownSearchState<T> extends State<CustomDropDown<T>> {
         hintText: widget.hint,
         hintStyle: widget.hintStyle,
         labelStyle: widget.labelStyle,
-        contentPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
         errorText: state.errorText);
   }
 
@@ -312,13 +311,13 @@ class DropdownSearchState<T> extends State<CustomDropDown<T>> {
       children: <Widget>[
         if (data != null && widget.showClearButton)
           InkWell(
-            child: widget.clearButton ?? const Icon(Icons.clear, size: 20),
+            child: const Icon(Icons.clear, size: 20),
             onTap: () => _handleOnChangeSelectedItem(null),
           ),
         SizedBox(width: 5,),
 
         Padding(
-          padding: widget.iconPadding?? EdgeInsets.symmetric(horizontal: 5),
+          padding: EdgeInsets.symmetric(horizontal: 5),
           child: InkWell(
             child: widget.dropDownButton ??
                 const Icon(Icons.arrow_drop_down, size: 24),

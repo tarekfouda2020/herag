@@ -54,7 +54,7 @@ class InkWellTextField extends StatelessWidget{
                 labelStyle: GoogleFonts.cairo(fontSize: 14,color: Colors.black54),
                 contentPadding: EdgeInsets.symmetric(horizontal: 10),
                 suffixIcon: icon,
-                prefixIcon:prefix,
+              prefixIcon:prefix,
                 filled: true,
                 fillColor: MyColors.white
             ),

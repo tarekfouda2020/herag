@@ -22,7 +22,7 @@ class FollowedCars extends StatelessWidget {
               },
             )
         ),
-        DefaultButton(title: "متابعة السيارات الجديدة", onTap: ()=>AutoRouter.of(context).pushPath(AddCarFollowerRoute.name))
+        DefaultButton(title: "متابعة السيارات الجديدة", onTap: ()=>AutoRouter.of(context).push(AddCarFollowerRoute()))
       ],
     );
   }
@@ -36,7 +36,7 @@ class FollowedCars extends StatelessWidget {
           actionPane: SlidableDrawerActionPane(),
           actionExtentRatio: 0.25,
           child: InkWell(
-            onTap: ()=>AutoRouter.of(context).pushPath(AddCarFollowerRoute.name),
+            onTap: ()=>AutoRouter.of(context).push(AddCarFollowerRoute()),
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
 

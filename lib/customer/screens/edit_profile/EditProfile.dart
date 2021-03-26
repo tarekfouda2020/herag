@@ -196,7 +196,7 @@ class _EditProfileState extends State<EditProfile> with EditProfileData {
           ),
 
           DefaultButton(
-            onTap: ()=>AutoRouter.of(context).pushPath(ChangePasswordRoute.name),
+            onTap: ()=>AutoRouter.of(context).push(ChangePasswordRoute()),
             title: "تعديل كلمة المرور",
             margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
             color: Colors.transparent,

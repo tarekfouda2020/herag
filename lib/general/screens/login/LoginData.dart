@@ -18,7 +18,7 @@ class LoginData{
       loginCubit.onchangeLoginLoading();
       if(result){
         context.read<AuthCubit>().onUpdateAuth(true);
-        AutoRouter.of(context).pushPath(HomeRoute.name);
+        AutoRouter.of(context).push(HomeRoute());
       }
 
     }

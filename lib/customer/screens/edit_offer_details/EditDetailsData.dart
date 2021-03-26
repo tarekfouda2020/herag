@@ -23,7 +23,7 @@ class EditDetailsData{
         if(value){
           HomeMainData.pagingController.refresh();
           AutoRouter.of(context).popUntilRouteWithName( HomeRoute.name);
-          AutoRouter.of(context).pushPath(EditOfferSuccessRoute.name);
+          AutoRouter.of(context).push(EditOfferSuccessRoute());
         }
       });
     }

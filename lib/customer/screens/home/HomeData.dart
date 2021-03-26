@@ -61,7 +61,7 @@ class HomeData {
   void addAddClick(BuildContext context){
     bool result= context.read<AuthCubit>().state.authorized;
     if(result){
-      AutoRouter.of(context).pushPath(AddOffersRoute.name);
+      context.router.push(AddOffersRoute());
     }else{
       LoadingDialog.showAuthDialog(context: context);
     }

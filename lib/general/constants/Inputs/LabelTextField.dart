@@ -11,10 +11,9 @@ class LabelTextField extends StatefulWidget {
   final TextInputType type;
   final Function(String value) validate;
   final Function() onSubmit;
-  final Function(String) onChange;
   final TextInputAction action;
 
-  LabelTextField({this.label,this.controller,this.onChange,
+  LabelTextField({this.label,this.controller,
     this.margin,this.isPassword=false,this.action,this.onSubmit,
     this.type=TextInputType.text,this.validate});
   @override
@@ -39,11 +38,10 @@ class _LabelTextFieldState extends State<LabelTextField> {
           keyboardType: widget.type?? TextInputType.text,
           obscureText: widget.isPassword,
           onEditingComplete: widget.onSubmit,
-          onChanged: widget.onChange,
           enableSuggestions: false,
           autocorrect: false,
           textInputAction: widget.action?? TextInputAction.next,
-          style: GoogleFonts.roboto(fontSize: 20,color: Colors.black),
+          style: GoogleFonts.cairo(fontSize: 14,color: Colors.black.withOpacity(.7)),
           validator: (value)=> widget.validate(value),
           decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
@@ -62,12 +60,13 @@ class _LabelTextFieldState extends State<LabelTextField> {
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(color: Colors.red,width: 2)
               ),
-              errorStyle: GoogleFonts.roboto(fontSize: 14),
+              errorStyle: GoogleFonts.abel(fontSize: 12),
               labelText: "  ${widget.label}  ",
-              labelStyle: GoogleFonts.roboto(fontSize: 18),
-              contentPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+              labelStyle: GoogleFonts.cairo(fontSize: 14),
+              contentPadding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
               filled: true,
               fillColor: Colors.white,
+
           ),
         ),
       ),
