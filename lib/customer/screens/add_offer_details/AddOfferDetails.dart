@@ -162,7 +162,7 @@ class _AddOfferDetailsState extends State<AddOfferDetails> with OfferDetailsData
                       children: [
                         Checkbox(value: state.showPhone, onChanged: changePhoneState),
                         SizedBox(width: 5,),
-                        MyText(title: "اخفاء رقم الجوال",size: 10,color: MyColors.blackOpacity,)
+                        MyText(title: "هل ترغب بتحديد رقم الجوال ؟",size: 10,color: MyColors.blackOpacity,)
                       ],
                     ),
                     Offstage(
