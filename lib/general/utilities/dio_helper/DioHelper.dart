@@ -154,19 +154,8 @@ class DioHelper {
   }
 
   Future<void> logout()async{
-    LoadingDialog.showLoadingDialog();
-    String deviceId=await Utils.getDeviceId();
-    Map<String,dynamic> body={
-      "lang":context.read<LangCubit>().state.locale.languageCode,
-      "user_id":context.read<UserCubit>().state.model.id,
-      "device_id":"$deviceId"
-    };
-    print(body);
-    await DioHelper(context: context).get("/api/v1/logout", body);
-    EasyLoading.dismiss().then((value){
-      Utils.clearSavedData();
-      Phoenix.rebirth(context);
-    });
+    Utils.clearSavedData();
+    Phoenix.rebirth(context);
   }
 
 

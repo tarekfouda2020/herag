@@ -35,8 +35,8 @@ class EditAdModel {
   bool checkRate;
   bool checkWishList;
   List<String> allImg;
-  AdsDataModel adsInfo;
-
+  @JsonProperty(name: "adsInfo")
+  AdsDataModel info;
 
   factory EditAdModel .fromMap(Map<String, dynamic> json) => JsonMapper.fromMap<EditAdModel>(json);
   Map<String, dynamic> toJson() => JsonMapper.toMap(this);

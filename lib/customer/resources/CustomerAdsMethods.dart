@@ -35,7 +35,7 @@ class CustomerAdsMethods{
 
   Future<List<AdsModel>> getAdsData(FilterModel model,bool refresh)async{
     model.lang=context.read<LangCubit>().state.locale.languageCode;
-    var _data = await DioHelper(forceRefresh: refresh).get("/api/v1/ListAllAdsByFillter", model.toJson());
+    var _data = await DioHelper(forceRefresh: refresh,context: context).get("/api/v1/ListAllAdsByFillter", model.toJson());
     if(_data!=null){
       context.read<ShowPayCubit>().onUpdateShow(_data["showPay"]??true);
       context.read<NotifyCountCubit>().onUpdateCount(_data["countNotify"]??0);
@@ -51,7 +51,7 @@ class CustomerAdsMethods{
     Map<String,dynamic> body={
       "lang":lang
     };
-    var _data = await DioHelper(forceRefresh: false).get("/api/v1/ListOfRegoinAsync", body);
+    var _data = await DioHelper(forceRefresh: false,context: context).get("/api/v1/ListOfRegoinAsync", body);
     if(_data!=null){
       return List<DropDownModel>.from(_data["data"].map((e) => DropDownModel.fromMap(e)));
     }else{
@@ -65,7 +65,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "regoinId":regionId
     };
-    var _data = await DioHelper(forceRefresh: false).get("/api/v1/ListOfCitysAsync", body);
+    var _data = await DioHelper(forceRefresh: false,context: context).get("/api/v1/ListOfCitysAsync", body);
     if(_data!=null){
       return List<DropDownModel>.from(_data["data"].map((e) => DropDownModel.fromMap(e)));
     }else{
@@ -79,7 +79,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "cityId":cityId
     };
-    var _data = await DioHelper(forceRefresh: false).get("/api/v1/ListOfDistrictsByCityIdAsync", body);
+    var _data = await DioHelper(forceRefresh: false,context: context).get("/api/v1/ListOfDistrictsByCityIdAsync", body);
     if(_data!=null){
       return List<DropDownModel>.from(_data["data"].map((e) => DropDownModel.fromMap(e)));
     }else{
@@ -87,13 +87,13 @@ class CustomerAdsMethods{
     }
   }
 
-  Future<List<OffersHeaderModel>> getOffersHeaderData(bool refresh)async{
+  Future<List<OffersHeaderModel>> getOffersHeaderData(bool refresh,)async{
     String lang=context.read<LangCubit>().state.locale.languageCode;
     Map<String,dynamic> body={
       "lang":lang
     };
     print(body);
-    var _data = await DioHelper(forceRefresh: refresh).get("/api/v1/ListOfHeaderAds", body);
+    var _data = await DioHelper(forceRefresh: refresh,context: context).get("/api/v1/ListOfHeaderAds", body);
     if(_data!=null){
       return List<OffersHeaderModel>.from(_data["data"].map((e) => OffersHeaderModel.fromMap(e)));
     }else{
@@ -108,7 +108,7 @@ class CustomerAdsMethods{
       "catId":catId,
     };
     print(body);
-    var _data = await DioHelper(forceRefresh: false).get("/api/v1/ListOfSpecifications", body);
+    var _data = await DioHelper(forceRefresh: false,context: context).get("/api/v1/ListOfSpecifications", body);
     if(_data!=null){
       return List<SpecificationHeaderModel>.from(_data["data"].map((e) => SpecificationHeaderModel.fromMap(e)));
     }else{
@@ -117,12 +117,12 @@ class CustomerAdsMethods{
   }
 
   Future<bool> setAddOffer(AddAdsModel model)async{
-    var _data = await DioHelper().uploadFile("/api/v1/Add_AdsForAppAsync", model.toJson());
+    var _data = await DioHelper(context: context).uploadFile("/api/v1/Add_AdsForAppAsync", model.toJson());
     return _data!=null?true:false;
   }
 
   Future<bool> setEditOffer(UpdateAdModel model)async{
-    var _data = await DioHelper().uploadFile("/api/v1/Update_AdsForAppAsync", model.toJson());
+    var _data = await DioHelper(context: context).uploadFile("/api/v1/Update_AdsForAppAsync", model.toJson());
     return _data!=null?true:false;
   }
 
@@ -131,7 +131,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "adsId":adsId,
     };
-    var _data = await DioHelper(forceRefresh: refresh).get("/api/v1/GetAdsInfo", body);
+    var _data = await DioHelper(forceRefresh: refresh,context: context).get("/api/v1/GetAdsInfo", body);
     if(_data!=null){
       return AdsDetailsModel.fromMap(_data["data"]);
     }else{
@@ -144,7 +144,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "adsId":adsId,
     };
-    var _data = await DioHelper(forceRefresh: refresh).get("/api/v1/GetAdsCommentInfo", body);
+    var _data = await DioHelper(forceRefresh: refresh,context: context).get("/api/v1/GetAdsCommentInfo", body);
     if(_data!=null){
       return List<CommentModel>.from(_data["data"].map((e) => CommentModel.fromMap(e)));
     }else{
@@ -159,7 +159,7 @@ class CustomerAdsMethods{
       "adsId":adsId,
       "comment":comment
     };
-    var _data = await DioHelper().post("/api/v1/AddCommentToAdsAsync", body);
+    var _data = await DioHelper(context: context).post("/api/v1/AddCommentToAdsAsync", body);
     if(_data!=null){
       return CommentModel.fromMap(_data["commentData"]);
     }else{
@@ -174,7 +174,7 @@ class CustomerAdsMethods{
       "commentId":id,
       "text":reply
     };
-    var _data = await DioHelper().post("/api/v1/AddReplyForCommentAsync", body);
+    var _data = await DioHelper(context: context).post("/api/v1/AddReplyForCommentAsync", body);
     return (_data!=null)?ReplyModel.fromMap(_data["replyData"]):null;
   }
 
@@ -184,7 +184,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "commentId":id,
     };
-    var _data = await DioHelper().post("/api/v1/RemoveCommentToAdsByIdAsync", body);
+    var _data = await DioHelper(context: context).post("/api/v1/RemoveCommentToAdsByIdAsync", body);
     return (_data!=null);
   }
 
@@ -194,7 +194,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "commentReplyId":id,
     };
-    var _data = await DioHelper().post("/api/v1/RemoveCommentReplyByIdAsync", body);
+    var _data = await DioHelper(context: context).post("/api/v1/RemoveCommentReplyByIdAsync", body);
     return (_data!=null);
   }
 
@@ -204,7 +204,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "adsId":id,
     };
-    var _data = await DioHelper().post("/api/v1/AddItemToWishlist", body);
+    var _data = await DioHelper(context: context).post("/api/v1/AddItemToWishlist", body);
     return (_data!=null);
   }
 
@@ -214,7 +214,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "adsId":id,
     };
-    var _data = await DioHelper().post("/api/v1/RemoveAdsToWishListForSiteAsync", body);
+    var _data = await DioHelper(context: context).post("/api/v1/RemoveAdsToWishListForSiteAsync", body);
     return (_data!=null);
   }
 
@@ -222,7 +222,7 @@ class CustomerAdsMethods{
     Map<String,dynamic> body={
       "lang":lang
     };
-    var _data = await DioHelper().get("/api/v1/ListWishlist", body);
+    var _data = await DioHelper(context: context).get("/api/v1/ListWishlist", body);
     if(_data!=null){
       return List<AdsModel>.from(_data["data"].map((e) => AdsModel.fromMap(e)));
     }else{
@@ -236,7 +236,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "adsId":id,
     };
-    var _data = await DioHelper().post("/api/v1/AddItemToFollow", body);
+    var _data = await DioHelper(context: context).post("/api/v1/AddItemToFollow", body);
     return (_data!=null);
   }
 
@@ -246,7 +246,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "AdsId":id,
     };
-    var _data = await DioHelper().post("/api/v1/RemoveItemFromFollow", body);
+    var _data = await DioHelper(context: context).post("/api/v1/RemoveItemFromFollow", body);
     return _data!=null;
   }
 
@@ -256,7 +256,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "fkUserFollow":userId,
     };
-    var _data = await DioHelper().post("/api/v1/AddUserToFollow", body);
+    var _data = await DioHelper(context: context).post("/api/v1/AddUserToFollow", body);
     return (_data!=null);
   }
 
@@ -267,7 +267,7 @@ class CustomerAdsMethods{
       "adsId":id,
       "reason":reason
     };
-    var _data = await DioHelper().post("/api/v1/AddReporToAds", body);
+    var _data = await DioHelper(context: context).post("/api/v1/AddReporToAds", body);
     return (_data!=null);
   }
 
@@ -276,7 +276,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "userId":userId,
     };
-    var _data = await DioHelper(forceRefresh: refresh).get("/api/v1/ListAdsByUserId", body);
+    var _data = await DioHelper(forceRefresh: refresh,context: context).get("/api/v1/ListAdsByUserId", body);
     if(_data!=null){
       UserDetailsModel model = UserDetailsModel(
         ads: List<AdsModel>.from(_data["data"].map((e) => AdsModel.fromMap(e))),
@@ -296,7 +296,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "userId":id,
     };
-    var _data = await DioHelper(forceRefresh: refresh).get("/api/v1/ListCommentsLikesByUserId", body);
+    var _data = await DioHelper(forceRefresh: refresh,context: context).get("/api/v1/ListCommentsLikesByUserId", body);
     if(_data!=null){
       return List<CommentModel>.from(_data["data"].map((e) => CommentModel.fromMap(e)));
     }else{
@@ -311,7 +311,7 @@ class CustomerAdsMethods{
       "userId":adsId,
       "comment":comment
     };
-    var _data = await DioHelper().post("/api/v1/AddCommentToUserAsync", body);
+    var _data = await DioHelper(context: context).post("/api/v1/AddCommentToUserAsync", body);
     if(_data!=null){
       return CommentModel.fromMap(_data["comment"]);
     }else{
@@ -325,7 +325,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "commentId":id,
     };
-    var _data = await DioHelper().post("/api/v1/RemoveCommentByIdAsync", body);
+    var _data = await DioHelper(context: context).post("/api/v1/RemoveCommentByIdAsync", body);
     return (_data!=null);
   }
 
@@ -333,7 +333,7 @@ class CustomerAdsMethods{
     Map<String,dynamic> body={
       "lang":lang,
     };
-    var _data = await DioHelper(forceRefresh: refresh).get("/api/v1/ListMyAds", body);
+    var _data = await DioHelper(forceRefresh: refresh,context: context).get("/api/v1/ListMyAds", body);
     if(_data!=null){
       return List<EditAdModel>.from(_data["data"].map((e) => EditAdModel.fromMap(e)));
     }else{
@@ -345,7 +345,7 @@ class CustomerAdsMethods{
     Map<String,dynamic> body={
       "lang":lang,
     };
-    var _data = await DioHelper().get("/api/v1/ListCommentsLikesByForMy", body);
+    var _data = await DioHelper(context: context).get("/api/v1/ListCommentsLikesByForMy", body);
     if(_data!=null){
       UserModel user=UserModel.fromJson(_data["userData"]);
       user.token=GlobalState.instance.get("token");
@@ -364,7 +364,7 @@ class CustomerAdsMethods{
       "userId":userId,
       "rate":rate
     };
-    var _data = await DioHelper().post("/api/v1/AddRateToUserAsync", body);
+    var _data = await DioHelper(context: context).post("/api/v1/AddRateToUserAsync", body);
     return(_data!=null)?_data["rate"]:0;
   }
 
@@ -373,7 +373,7 @@ class CustomerAdsMethods{
     Map<String,dynamic> body={
       "lang":lang,
     };
-    var _data = await DioHelper(forceRefresh: refresh).get("/api/v1/ListFollowAdsForAppAsync", body);
+    var _data = await DioHelper(forceRefresh: refresh,context: context).get("/api/v1/ListFollowAdsForAppAsync", body);
     if(_data!=null){
       return List<AdsModel>.from(_data["data"].map((e) => AdsModel.fromMap(e)));
     }else{
@@ -387,7 +387,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "AdsId":id,
     };
-    var _data = await DioHelper().post("/api/v1/RemoveFollowByIdForWebsiteAsync", body);
+    var _data = await DioHelper(context: context).post("/api/v1/RemoveFollowByIdForWebsiteAsync", body);
     return (_data!=null);
   }
 
@@ -396,7 +396,7 @@ class CustomerAdsMethods{
     Map<String,dynamic> body={
       "lang":lang,
     };
-    var _data = await DioHelper(forceRefresh: refresh).get("/api/v1/ListFollowUserForAppAsync", body);
+    var _data = await DioHelper(forceRefresh: refresh,context: context).get("/api/v1/ListFollowUserForAppAsync", body);
     if(_data!=null){
       return List<UserFollowerModel>.from(_data["data"].map((e) => UserFollowerModel.fromMap(e)));
     }else{
@@ -410,7 +410,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "followID":id,
     };
-    var _data = await DioHelper().post("/api/v1/RemoveItemFromFollow", body);
+    var _data = await DioHelper(context: context).post("/api/v1/RemoveItemFromFollow", body);
     return (_data!=null);
   }
 
@@ -420,7 +420,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "text":text,
     };
-    var _data = await DioHelper(forceRefresh: false).get("/api/v1/SearchInBranch", body);
+    var _data = await DioHelper(forceRefresh: false,context: context).get("/api/v1/SearchInBranch", body);
     if(_data!=null){
       return List<SearchModel>.from(_data["data"].map((e) => SearchModel.fromMap(e)));
     }else{
@@ -432,7 +432,7 @@ class CustomerAdsMethods{
     Map<String,dynamic> body={
       "lang":lang,
     };
-    var _data = await DioHelper(forceRefresh: refresh).get("/api/v1/ListOfNotify", body);
+    var _data = await DioHelper(forceRefresh: refresh,context: context).get("/api/v1/ListOfNotify", body);
     if(_data!=null){
       return List<NotifyModel>.from(_data["notify"].map((e) => NotifyModel.fromMap(e)));
     }else{
@@ -446,7 +446,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "notifyId":"$id"
     };
-    var _data = await DioHelper().post("/api/v1/RemoveNotiyByIdAsync", body);
+    var _data = await DioHelper(context: context).post("/api/v1/RemoveNotiyByIdAsync", body);
     return (_data!=null);
   }
 
@@ -455,7 +455,7 @@ class CustomerAdsMethods{
     Map<String,dynamic> body={
       "lang":lang,
     };
-    var _data = await DioHelper().post("/api/v1/RemoveAllNotiy", body);
+    var _data = await DioHelper(context: context).post("/api/v1/RemoveAllNotiy", body);
     return (_data!=null);
   }
 
@@ -465,7 +465,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "adsId":"$id"
     };
-    var _data = await DioHelper().post("/api/v1/ReomveAdsById", body);
+    var _data = await DioHelper(context: context).post("/api/v1/ReomveAdsById", body);
     return (_data!=null);
   }
 
@@ -475,12 +475,12 @@ class CustomerAdsMethods{
       "lang":lang,
       "ImgId":"$id"
     };
-    var _data = await DioHelper().post("/api/v1/ReomveImgId", body);
+    var _data = await DioHelper(context: context).post("/api/v1/ReomveImgId", body);
     return (_data!=null);
   }
 
   Future<bool> addPayment(AddPayModel model)async{
-    var _data = await DioHelper().uploadFile("/api/v1/AddBankTransferAsync", model.toJson());
+    var _data = await DioHelper(context: context).uploadFile("/api/v1/AddBankTransferAsync", model.toJson());
     return (_data!=null);
   }
 
@@ -489,7 +489,7 @@ class CustomerAdsMethods{
     Map<String,dynamic> body={
       "lang":lang,
     };
-    var _data = await DioHelper().get("/api/v1/ListBanks", body);
+    var _data = await DioHelper(context: context).get("/api/v1/ListBanks", body);
     if(_data!=null){
       return List<BankModel>.from(_data["data"].map((e) => BankModel.fromMap(e)));
     }else{
@@ -503,7 +503,7 @@ class CustomerAdsMethods{
       "lang":lang,
       "adsId":"$id",
     };
-    var _data = await DioHelper().post("/api/v1/RefreshAdsAsync", body);
+    var _data = await DioHelper(context: context).post("/api/v1/RefreshAdsAsync", body);
     return (_data!=null);
   }
 

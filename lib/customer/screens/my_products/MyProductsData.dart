@@ -6,7 +6,7 @@ class MyProductsData{
 
 
   void navigateTo(BuildContext context,EditAdModel model){
-    AutoRouter.of(context).push(EditOfferImagesRoute(model: model.adsInfo));
+    AutoRouter.of(context).push(EditOfferImagesRoute(model: model.info));
   }
 
 }

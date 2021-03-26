@@ -16,7 +16,7 @@ class _CallUsState extends State<CallUs> with CallUsData {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(
-        title: tr(context,"callUs"),
+        title: "تواصل معنا",
         con: context,
       ),
       key: _scaffold,
@@ -67,7 +67,7 @@ class _CallUsState extends State<CallUs> with CallUsData {
                   builder: (_, state) {
                     return InkWellTextField(
                       controller: callFile,
-                      label: "${tr(context,"choseFile")}",
+                      label: "حدد ملف",
                       type: TextInputType.text,
                       icon: Icon(Icons.attach_file),
                       onTab: showFileTypeDialog,
@@ -82,7 +82,7 @@ class _CallUsState extends State<CallUs> with CallUsData {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: MyText(
-                    title: tr(context,"orCallVia"),
+                    title: "او عبر الوسائل التالية",
                   ),
                 ),
                 BlocBuilder<CallSocialCubit, CallSocialState>(
@@ -108,7 +108,9 @@ class _CallUsState extends State<CallUs> with CallUsData {
                               icon: Icons.call,
                               content: state.model.phone,
                               onTap: () =>
-                                  Utils.callPhone(phone: state.model.phone)),
+                                  Utils.callPhone(phone: state.model.phone),
+                          ),
+                          SizedBox(height: 50,)
                         ],
                       );
                     } else {
@@ -132,7 +134,7 @@ class _CallUsState extends State<CallUs> with CallUsData {
       onTap: onTap,
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 70,
+        height: 60,
         margin: EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
           color: MyColors.greyWhite,
@@ -141,8 +143,8 @@ class _CallUsState extends State<CallUs> with CallUsData {
         child: Row(
           children: [
             Container(
-              width: 60,
-              height: 60,
+              width: 40,
+              height: 40,
               margin: EdgeInsets.symmetric(horizontal: 6),
               decoration: BoxDecoration(
                   color: MyColors.primary,
@@ -150,14 +152,14 @@ class _CallUsState extends State<CallUs> with CallUsData {
               child: Icon(
                 icon,
                 color: MyColors.white,
-                size: 30,
+                size: 25,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: MyText(
                 title: content,
-                size: 16,
+                size: 12,
               ),
             ),
           ],

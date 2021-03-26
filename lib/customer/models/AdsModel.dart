@@ -33,12 +33,12 @@ class AdsModel  {
   String lat;
   String lng;
   int countComment;
-  bool fromAppOrNo;
   bool checkRate;
   bool checkWishList;
   List<String> allImg;
   @JsonProperty(name: "adsInfo")
   AdsDataModel info;
+  bool fromAppOrNo;
 
 
   factory AdsModel .fromMap(Map<String, dynamic> json) => JsonMapper.fromMap<AdsModel>(json);

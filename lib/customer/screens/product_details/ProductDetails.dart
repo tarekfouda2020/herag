@@ -260,9 +260,9 @@ class _ProductDetailsState extends State<ProductDetails> with ProDetailsData {
             child: CachedImage(
               url: images[index].url,
               width: MediaQuery.of(context).size.width,
-              height: 160,
-              fit: BoxFit.fill,
-              borderColor: MyColors.blackOpacity,
+              height: 250,
+              fit: BoxFit.contain,
+              borderColor: MyColors.greyWhite,
             ),
           ),
         );

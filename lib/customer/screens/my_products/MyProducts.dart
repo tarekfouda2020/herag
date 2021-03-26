@@ -16,6 +16,7 @@ class _MyProductsState extends State<MyProducts> with MyProductsData{
 
   @override
   Widget build(BuildContext context) {
+    var user = context.watch<UserCubit>().state.model;
     return Scaffold(
       appBar: DefaultAppBar(title: "اعلاناتي", con: context),
       backgroundColor: MyColors.white,
@@ -23,7 +24,7 @@ class _MyProductsState extends State<MyProducts> with MyProductsData{
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // _buildHeaderView(user),
+          _buildHeaderView(user),
           _buildProductListView()
         ],
       ),
@@ -83,8 +84,10 @@ class _MyProductsState extends State<MyProducts> with MyProductsData{
           if(state.ads.length>0){
             return _buildProductsView(state.ads);
           }else{
-            return Center(
-              child: MyText(title: "لايوجد بيانات",size: 12,color: MyColors.blackOpacity,),
+            return Expanded(
+              child: Center(
+                child: MyText(title: "لايوجد بيانات",size: 12,color: MyColors.blackOpacity,),
+              ),
             );
           }
         }else{
@@ -95,8 +98,10 @@ class _MyProductsState extends State<MyProducts> with MyProductsData{
   }
 
   Widget _buildLoadingView(){
-    return Center(
-      child: LoadingDialog.showLoadingView(),
+    return Expanded(
+      child: Center(
+        child: LoadingDialog.showLoadingView(),
+      ),
     );
   }
 
@@ -122,6 +127,8 @@ class _MyProductsState extends State<MyProducts> with MyProductsData{
               date: ads[index].date,
               location: ads[index].location,
               userName: ads[index].userName,
+              fromAppOrNo: ads[index].fromAppOrNo,
+              info: ads[index].info,
             );
             return Slidable(
               actionPane: SlidableDrawerActionPane(),
