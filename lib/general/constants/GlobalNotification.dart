@@ -1,12 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
+import 'package:base_flutter/customer/models/AdsModel.dart';
+import 'package:base_flutter/general/blocs/chat_count_cubit/chat_count_cubit.dart';
+import 'package:base_flutter/general/blocs/notify_count_cubit/notify_count_cubit.dart';
+import 'package:base_flutter/general/utilities/moor_db/db.dart';
 import 'package:base_flutter/general/utilities/routers/RouterImports.gr.dart';
 import 'package:base_flutter/general/utilities/utils_functions/UtilsImports.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GlobalNotification {
   static StreamController<Map<String, dynamic>> _onMessageStreamController =
@@ -76,8 +81,13 @@ class GlobalNotification {
   }
 
   _showLocalNotification(RemoteMessage message, id) async {
-    // var provider= navigatorKey.currentContext.read<NotifyProvider>();
-    // provider.setNotifyCount(provider.count+1);
+
+    int _type = int.parse(message.data["type"]??"0");
+    if(_type==9){
+      _context.read<ChatCountCubit>().onUpdateCount(_context.read<ChatCountCubit>().state.count+1);
+    }else{
+      _context.read<NotifyCountCubit>().onUpdateCount(_context.read<NotifyCountCubit>().state.count+1);
+    }
 
     var android = AndroidNotificationDetails(
       "${DateTime.now()}",
@@ -98,13 +108,22 @@ class GlobalNotification {
   Future flutterNotificationClick(String payload) async {
 
     print("tttttttttt $payload");
+    var _data = json.decode(payload);
 
-    // if (_type >= 1 && _type <= 4) {
-    //   var adInfo= json.decode(_data["ads_info"]);
-    //   AutoRouter.root.push(Routes.productDetails,
-    //       arguments: ProductDetailsArguments(model: model));
-    // } else if(_type >4) {
-    //   AutoRouter.root.push(Routes.home);
-    // }
+    int _type = int.parse(_data["type"]??"4");
+
+
+    if (_type >= 1 && _type <= 4) {
+      var adInfo= json.decode(_data["ads_info"]);
+      AdsModel model = new AdsModel.fromMap(adInfo);
+      _context.router.push(ProductDetailsRoute(model: model));
+    } else if(_type ==5||_type ==6||_type ==8) {
+      _context.router.push(UserProductsRoute(userId: _data["user_id"],userName: _data["user_name"]));
+    } else if(_type ==9) {
+      _context.router.push(ChatRoute(userName: _data["userName"],receiverId: _data["receiverId"],senderId: _data["senderId"]));
+    } else if(_type ==7) {
+      int parentCount=(await _context.read<MyDatabase>().selectParentCatsAsync()).length;
+      _context.router.push(HomeRoute(parentCount: parentCount,tab: 2));
+    }
   }
 }
