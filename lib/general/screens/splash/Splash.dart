@@ -20,10 +20,17 @@ class _SplashState extends State<Splash> {
 
   @override
   void initState() {
-    GlobalNotification.instance.setupNotification(context: context);
-    Utils.manipulateSplashData(context);
+    _checkingData();
     super.initState();
   }
+
+  _checkingData()async{
+   GlobalNotification.instance.setupNotification(context: context);
+    Utils.manipulateSplashData(context);
+
+
+  }
+
 
 
   @override
@@ -37,7 +44,6 @@ class _SplashState extends State<Splash> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-
             AnimationContainer(
               distance: 500,
               index: 0,

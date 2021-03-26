@@ -101,10 +101,10 @@ class GlobalNotification {
 
     // if (_type >= 1 && _type <= 4) {
     //   var adInfo= json.decode(_data["ads_info"]);
-    //   ExtendedNavigator.root.push(Routes.productDetails,
+    //   AutoRouter.root.push(Routes.productDetails,
     //       arguments: ProductDetailsArguments(model: model));
     // } else if(_type >4) {
-    //   ExtendedNavigator.root.push(Routes.home);
+    //   AutoRouter.root.push(Routes.home);
     // }
   }
 }

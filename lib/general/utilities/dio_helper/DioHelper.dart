@@ -4,11 +4,12 @@ part of 'DioImports.dart';
 class DioHelper {
   Dio _dio;
   DioCacheManager _manager;
+  BuildContext context;
   final bool forceRefresh;
-  final baseUrl = "https://khdamatawamer.ip4s.com";
+  final baseUrl = "https://hiraj.ip4s.com";
   final String _branch="6";
 
-  DioHelper({this.forceRefresh=true}){
+  DioHelper({this.forceRefresh=true,this.context}){
     if (_dio == null) {
       _dio = Dio(BaseOptions(
           baseUrl: baseUrl,
@@ -31,21 +32,20 @@ class DioHelper {
 
   Options _buildCacheOptions(Map<String,dynamic> body,{bool subKey=true}){
     return buildCacheOptions(
-        Duration(days: 3),
-        maxStale: Duration(days: 7),
+        Duration(hours: 1),
+        maxStale: Duration(days: 1),
         forceRefresh: forceRefresh,
-        subKey: subKey? json.encode(body):""
+        subKey: subKey? json.encode(body):"",
     );
   }
 
 
   Future<dynamic> get(String url,Map<String,dynamic> body)async{
-    // body.addAll({"branchId":_branch});
+    body.addAll({"branchId":_branch});
     _printRequestBody(body);
     _dio.options.headers=await _getHeader();
-
     try{
-      var response = await _dio.post("$baseUrl$url",data: FormData.fromMap(body),options: _buildCacheOptions(body));
+      var response = await _dio.post("$baseUrl$url",data: FormData.fromMap(body),);
       print( "response ${response.statusCode}");
       var data= response.data;
       if(data["key"]==1){
@@ -55,34 +55,33 @@ class DioHelper {
       }
     }on DioError catch(e){
       if(e.response.statusCode==401||e.response.statusCode==301){
-        tokenExpired();
+        logout();
       }else{
-        LoadingDialog.showToastNotification("تآكد من الانترنت");
+        LoadingDialog.showToastNotification(tr(context,"chickNet"));
       }
     }
     return null;
   }
 
 
-  Future<dynamic> post(String url,Map<String,dynamic>  body,{bool showLoader=true})async{
-    if(showLoader)LoadingDialog.showLoadingDialog();
-    // body.addAll({"branchId":_branch});
+  Future<dynamic> post(String url,Map<String,dynamic>  body)async{
+    LoadingDialog.showLoadingDialog();
+    body.addAll({"branchId":_branch});
     _printRequestBody(body);
     _dio.options.headers=await _getHeader();
-
     try{
       var response = await _dio.post("$baseUrl$url",data: FormData.fromMap(body),options: _buildCacheOptions(body));
       print( "response ${response.statusCode}");
-      if(showLoader)EasyLoading.dismiss();
+      EasyLoading.dismiss();
       LoadingDialog.showToastNotification(response.data["msg"].toString());
       if(response.data["key"]==1)return response.data;
 
     }on DioError catch(e){
-      if(showLoader)EasyLoading.dismiss();
+      EasyLoading.dismiss();
       if(e.response.statusCode==401||e.response.statusCode==301){
-        tokenExpired();
+        logout();
       }else{
-        LoadingDialog.showToastNotification("تآكد من الانترنت");
+        LoadingDialog.showToastNotification(tr(context,"chickNet"));
       }
     }
 
@@ -91,9 +90,9 @@ class DioHelper {
   }
 
 
-  Future<dynamic> uploadFile(String url,Map<String,dynamic> body,{bool showLoader=true}) async{
-    if(showLoader)LoadingDialog.showLoadingDialog();
-    // body.addAll({"branchId":_branch});
+  Future<dynamic> uploadFile(String url,Map<String,dynamic> body) async{
+    LoadingDialog.showLoadingDialog();
+    body.addAll({"branchId":_branch});
     _printRequestBody(body);
     FormData formData = FormData.fromMap(body);
     body.forEach((key, value) async {
@@ -123,16 +122,16 @@ class DioHelper {
     try{
       var response = await _dio.post("$baseUrl$url",data: formData,options: _buildCacheOptions(body,subKey: false));
       print( "response ${response.statusCode}");
-      if(showLoader)EasyLoading.dismiss();
+      EasyLoading.dismiss();
       LoadingDialog.showToastNotification(response.data["msg"].toString());
       if(response.data["key"]==1)return response.data;
 
     }on DioError catch(e){
-      if(showLoader)EasyLoading.dismiss();
+      EasyLoading.dismiss();
       if(e.response.statusCode==401||e.response.statusCode==301){
-        tokenExpired();
+        logout();
       }else{
-        LoadingDialog.showToastNotification("تآكد من الانترنت");
+        LoadingDialog.showToastNotification(tr(context,"chickNet"));
       }
     }
 
@@ -154,10 +153,22 @@ class DioHelper {
     };
   }
 
-  void tokenExpired(){
-    Utils.clearSavedData();
-    // ExtendedNavigator.root.push(Routes.login);
+  Future<void> logout()async{
+    LoadingDialog.showLoadingDialog();
+    String deviceId=await Utils.getDeviceId();
+    Map<String,dynamic> body={
+      "lang":context.read<LangCubit>().state.locale.languageCode,
+      "user_id":context.read<UserCubit>().state.model.id,
+      "device_id":"$deviceId"
+    };
+    print(body);
+    await DioHelper(context: context).get("/api/v1/logout", body);
+    EasyLoading.dismiss().then((value){
+      Utils.clearSavedData();
+      Phoenix.rebirth(context);
+    });
   }
+
 
 
 

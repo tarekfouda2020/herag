@@ -1,6 +1,7 @@
 part of 'ResetPasswordImports.dart';
 
 
+
 class ResetPassword extends StatefulWidget {
   final String userId;
   ResetPassword({@required this.userId});
@@ -51,7 +52,7 @@ class _ResetPasswordState extends State<ResetPassword> with ResetPasswordData {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               MyText(
-                title:("resetPassword"),
+                title:tr(context,"resetPassword"),
                 size: 12,
                 color: MyColors.black,
                 alien: TextAlign.center,
@@ -72,30 +73,30 @@ class _ResetPasswordState extends State<ResetPassword> with ResetPasswordData {
                     LabelTextField(
                       margin: EdgeInsets.symmetric(horizontal: 10,),
                       type: TextInputType.number,
-                      label: ("activeCode"),
+                      label: tr(context,"activeCode"),
                       isPassword: false,
                       controller: _code,
                       action: TextInputAction.next,
-                      validate: (value)=> value.validateEmpty(),
+                      validate: (value)=> Validator(context).validateEmpty(value: value),
                     ),
                     LabelTextField(
                       margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                       type: TextInputType.text,
-                      label: ("newPassword"),
+                      label: tr(context,"newPassword"),
                       isPassword: true,
                       controller: _new,
                       action: TextInputAction.next,
-                      validate: (value)=> value.validatePassword(),
+                      validate: (value)=> Validator(context).validatePassword(value: value),
                     ),
                     LabelTextField (
                       margin: EdgeInsets.symmetric(horizontal: 10,),
                       type: TextInputType.text,
-                      label: ("confirmPassword"),
+                      label: tr(context,"confirmPassword"),
                       isPassword: true,
                       action: TextInputAction.done,
                       onSubmit: ()=>setForgetPassword(context,widget.userId),
                       controller: _conform,
-                      validate: (value)=> value.validatePasswordConfirm(pass: _new.text),
+                      validate: (value)=> Validator(context).validatePasswordConfirm(confirm: value,pass: _new.text),
                     ),
                   ],
                 )
@@ -120,7 +121,7 @@ class _ResetPasswordState extends State<ResetPassword> with ResetPasswordData {
           ),
           alignment: Alignment.center,
           child: MyText(
-            title: "${("send")}",
+            title: "${tr(context,"send")}",
             size: 12,
             color: Colors.white,
           ),

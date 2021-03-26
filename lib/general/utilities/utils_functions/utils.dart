@@ -6,23 +6,35 @@ class Utils {
   static Future<void> manipulateSplashData( BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // await GeneralRepository(context).getHomeConstData();
+    //  await context.read<MyDatabase>().selectAllCats();
+    // if(_all.length==0){
+    //   await GeneralRepository(context).getAllCategories();
+    // }else{
+    //   GeneralRepository(context).getAllCategories();
+    // }
+    GeneralRepository(context).getAllCategories().then((value) async {
+      var strUser = prefs.get("user");
+      if (strUser != null) {
+        UserModel data = UserModel.fromJson(json.decode(strUser));
+        GlobalState.instance.set("token", data.token);
+        changeLanguage(data.lang,context);
+        setCurrentUserData(data,context);
+      } else {
+        context.read<AuthCubit>().onUpdateAuth(false);
+        changeLanguage("ar",context);
+        int parentCount=(await context.read<MyDatabase>().selectParentCatsAsync()).length;
+        AutoRouter.of(context).push(HomeRoute(parentCount: parentCount));
+      }
+    });
 
-    var strUser = prefs.get("user");
-    if (strUser != null) {
-      UserModel data = UserModel.fromJson(json.decode(strUser));
-      GlobalState.instance.set("token", data.token);
-      changeLanguage(data.lang,context);
-      setCurrentUserData(data,context);
-    } else {
-      changeLanguage("ar",context);
-      context.router.push(LoginRoute());
-    }
 
   }
 
   static void  setCurrentUserData(UserModel model,BuildContext context)async{
-    // context.read<UserCubit>().onUpdateUserData(model);
-    // ExtendedNavigator.of(context).push(Routes.home,arguments: HomeArguments(parentCount: parentCount));
+    context.read<AuthCubit>().onUpdateAuth(true);
+    context.read<UserCubit>().onUpdateUserData(model);
+    int parentCount=(await context.read<MyDatabase>().selectParentCatsAsync()).length;
+    AutoRouter.of(context).push(HomeRoute(parentCount: parentCount));
   }
 
   static Future<void> saveUserData(UserModel model)async{
@@ -103,17 +115,17 @@ class Utils {
 
   // static void setSelectUser({@required int type, @required BuildContext context}) async {
   //   setCurrentUserType(context: context,type: type);
-  //   ExtendedNavigator(router: AppRouter(), name: Routes.login);
+  //   AutoRouter(router: AppRouter(), name: Routes.login);
   // }
 
-  static void launchURL({String url}) async {
+  static void launchURL({String url,BuildContext context}) async {
     if (!url.toString().startsWith("https")) {
       url = "https://" + url;
     }
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      LoadingDialog.showToastNotification("من فضلك تآكد من الرابط");
+      LoadingDialog.showToastNotification("${tr(context,"checkLink")}");
     }
   }
 
@@ -219,14 +231,27 @@ class Utils {
     }
   }
 
+  static Future<File> getFile({FileType type = FileType.image}) async {
+    FilePickerResult result = await FilePicker.platform
+        .pickFiles(allowMultiple: false, type: type);
+
+    if (result != null) {
+      return File(result.files.first.path);
+    } else {
+      return null;
+    }
+  }
+
+
+
   static Future<bool> askForPermission(Location location)async{
     var permission = await location.hasPermission();
-    if (permission == PermissionStatus.DENIED_FOREVER) {
+    if (permission == PermissionStatus.deniedForever) {
       return false;
-    } else if (permission == PermissionStatus.DENIED) {
+    } else if (permission == PermissionStatus.denied) {
       permission = await location.requestPermission();
-      if (permission == PermissionStatus.DENIED ||
-          permission == PermissionStatus.DENIED_FOREVER) {
+      if (permission == PermissionStatus.denied ||
+          permission == PermissionStatus.deniedForever) {
         return false;
       }
     }
@@ -240,11 +265,12 @@ class Utils {
     if(permission){
       current = await location.getLocation();
     }
-     return current;
+    return current;
 
   }
 
   static void navigateToMapWithDirection({String lat, String lng, String title})async{
+    print("_____________lat: $lat   lng: $lng");
     final availableMaps = await MapLauncher.installedMaps;
     LocationData loc = await getCurrentLocation();
     if (availableMaps.length>0) {
@@ -258,6 +284,43 @@ class Utils {
       LoadingDialog.showSimpleToast("قم بتحميل خريطة جوجل");
     }
   }
+
+  static Future<void> navigateToLocationAddress(BuildContext context) async {
+    var currentLoc=context.read<LocationCubit>();
+    if(currentLoc.state.model.lat!="0"&&currentLoc.state.model.lat.isNotEmpty){
+      double lat = double.parse(currentLoc.state.model.lat);
+      double lng = double.parse(currentLoc.state.model.lng);
+      EasyLoading.dismiss();
+      await AutoRouter.of(context).push(LocationAddressRoute(lat: lat, lng: lng)
+      );
+      return;
+    }
+
+    LoadingDialog.showLoadingDialog();
+    LocationData loc = await Utils.getCurrentLocation();
+    if (loc != null) {
+      LocationModel locationModel = LocationModel(
+          loc.latitude.toString(),
+          loc.longitude.toString(),
+          ""
+      );
+      currentLoc.onLocationUpdated(locationModel);
+      EasyLoading.dismiss();
+      await AutoRouter.of(context).push(LocationAddressRoute(
+              lat: loc.latitude, lng: loc.longitude)
+      );
+    }else{
+      currentLoc.onLocationUpdated(
+          LocationModel("24.774265", "46.738586", ""),
+          change: false
+      );
+
+      EasyLoading.dismiss();
+      await AutoRouter.of(context).push(LocationAddressRoute(lat: 24.774265, lng: 46.738586)
+      );
+    }
+  }
+
 
   static String convertDigitsToLatin(String s) {
     var sb = new StringBuffer();

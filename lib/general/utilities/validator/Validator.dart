@@ -1,66 +1,71 @@
+import 'package:base_flutter/general/utilities/localization/LocalizationMethods.dart';
 import 'package:flutter/material.dart';
 
 
-extension Validator on String {
+class Validator{
+
+  final BuildContext context;
+
+  Validator(this.context);
 
   String noValidate({@required String value}){
     return null;
   }
 
-  String validateEmpty({String message}){
-    if(this.trim().isEmpty){
-      return message??"من فضل ادخل الحقل";
+  String validateEmpty({@required String value,String message}){
+    if(value.trim().isEmpty){
+      return message??tr(context,"fillField");
     }
     return null;
   }
 
   String validateDropDown<DataType>({@required DataType model,String message}){
     if(model==null){
-      return message??"من فضل ادخل الحقل";
+      return message??tr(context,"fillField");
     }
     return null;
   }
 
-  String validatePassword({String message}){
-    if(this.trim().isEmpty){
-      return message??"من فضل ادخل الحقل";
-    }else if(this.length<6){
-      return message??"من فضل ادخل علي الاقل ٦ حروف";
+  String validatePassword({@required String value,String message}){
+    if(value.trim().isEmpty){
+      return message??tr(context,"fillField");
+    }else if(value.length<6){
+      return message??tr(context,"passValidation");
     }
     return null;
   }
 
-  String validateEmail({String message}){
-    if(this.trim().isEmpty){
-      return message??"من فضل ادخل الحقل";
-    }else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(this)){
-      return message??"من فضلك ادخل البريد صحيحا";
+  String validateEmail({@required String value,String message}){
+    if(value.trim().isEmpty){
+      return message??tr(context,"fillField");
+    }else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)){
+      return message??tr(context,"mailValidation");
     }
     return null;
   }
-  String validateEmailORNull({String message}){
-    if(this.trim().isNotEmpty){
-      if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(this)){
-        return message??"من فضلك ادخل البريد صحيحا";
+  String validateEmailORNull({@required String value,String message}){
+    if(value.trim().isNotEmpty){
+      if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)){
+        return message??tr(context,"mailValidation");
       }
     }
     return null;
   }
 
-  String validatePhone({String message}){
-    if(this.trim().isEmpty){
-      return message??"من فضل ادخل الحقل";
-    }else if(!RegExp(r'(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)').hasMatch(this)||this.length<10){
-      return message??"من فضلك ادخل الجوال صحيحا";
+  String validatePhone({@required String value,String message}){
+    if(value.trim().isEmpty){
+      return message??tr(context,"fillField");
+    }else if(!RegExp(r'(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)').hasMatch(value)||value.length<10){
+      return message??tr(context,"phoneValidation");
     }
     return null;
   }
 
-  String validatePasswordConfirm({@required String pass,String message}){
-    if(this.trim().isEmpty){
-      return message??"من فضل ادخل الحقل";
-    }else if(this!=pass){
-      return message??"من فضلك ادخل رمز المرور متطابقا";
+  String validatePasswordConfirm({@required String confirm,@required String pass,String message}){
+    if(confirm.trim().isEmpty){
+      return message??tr(context,"fillField");
+    }else if(confirm!=pass){
+      return message??tr(context,"confirmValidation");
     }
     return null;
   }

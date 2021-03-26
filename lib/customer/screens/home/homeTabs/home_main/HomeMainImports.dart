@@ -1,0 +1,37 @@
+import 'dart:async';
+
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:base_flutter/customer/models/AdsModel.dart';
+import 'package:base_flutter/customer/models/DropDownModel.dart';
+import 'package:base_flutter/customer/models/Dtos/CategoryChildModel.dart';
+import 'package:base_flutter/customer/models/Dtos/FilterModel.dart';
+import 'package:base_flutter/customer/models/Dtos/LocationModel.dart';
+import 'package:base_flutter/customer/models/SearchModel.dart';
+import 'package:base_flutter/customer/resources/CustomerRepository.dart';
+import 'package:base_flutter/customer/screens/home/homeTabs/home_main/cat_tab_cubit/cat_tab_cubit.dart';
+import 'package:base_flutter/customer/screens/location_address/location_cubit/location_cubit.dart';
+import 'package:base_flutter/customer/widgets/NotData.dart';
+import 'package:base_flutter/customer/widgets/ProductGrid.dart';
+import 'package:base_flutter/customer/widgets/ProductRow.dart';
+import 'package:base_flutter/general/constants/Inputs/DropdownTextField.dart';
+import 'package:base_flutter/general/constants/Inputs/IconTextFiled.dart';
+import 'package:base_flutter/general/constants/Inputs/custom_dropDown/CustomDropDown.dart';
+import 'package:base_flutter/general/constants/ModaLs/LoadingDialog.dart';
+import 'package:base_flutter/general/constants/MyColors.dart';
+import 'package:base_flutter/general/utilities/moor_db/db.dart';
+import 'package:base_flutter/general/utilities/routers/RouterImports.gr.dart';
+import 'package:base_flutter/general/utilities/utils_functions/UtilsImports.dart';
+import 'package:base_flutter/general/widgets/MyText.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:location/location.dart';
+import 'product_view_cubit/product_views_cubit.dart';
+import 'listener_cubit/listener_cubit.dart';
+import 'brands_cubit/brands_cubit.dart';
+import 'cat_view_cubit/cat_view_cubit.dart';
+
+part 'HomeMain.dart';
+part 'HomeMainData.dart';
+part 'HomeMainAds.dart';

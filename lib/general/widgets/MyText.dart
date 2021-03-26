@@ -1,4 +1,4 @@
-import 'package:base_flutter/general/blocks/lang_cubit.dart';
+import 'package:base_flutter/general/blocs/lang_cubit/lang_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,11 +26,11 @@ class MyText extends StatelessWidget {
       style: context.read<LangCubit>().state.locale.languageCode=="ar"?
       GoogleFonts.cairo(
           color: color??Colors.black,
-          fontSize: size??16,
+          fontSize: size??14,
           decoration: decoration??TextDecoration.none,
           fontWeight: fontWeight
       ):
-      GoogleFonts.abel(
+      GoogleFonts.roboto(
           color: color??Colors.black,
           fontSize: size??16,
           decoration: decoration??TextDecoration.none,

@@ -43,7 +43,7 @@ class _LoginState extends State<Login> with LoginData{
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 MyText(
-                                  title: tr(context,"login"),
+                                  title:tr(context,"login"),
                                   size: 16,
                                   color: MyColors.primary,
                                   alien: TextAlign.center,
@@ -58,22 +58,22 @@ class _LoginState extends State<Login> with LoginData{
                                 LabelTextField(
                                   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                   type: TextInputType.phone,
-                                  label: "${("phone")}",
+                                  label: "${tr(context,"phone")}",
                                   isPassword: false,
                                   controller: phone,
                                   action: TextInputAction.next,
-                                  validate: (value)=> value.validateEmpty(),
+                                  validate: (value)=> Validator(context).validateEmpty(value: value),
 
                                 ),
                                 LabelTextField(
                                   margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                                   type: TextInputType.text,
-                                  label: "${("password")}",
+                                  label: "${tr(context,"password")}",
                                   isPassword: true,
                                   controller: pass,
                                   action: TextInputAction.done,
                                   onSubmit: ()=> setUserLogin(context),
-                                  validate: (value)=> value.validateEmpty(),
+                                  validate: (value)=> Validator(context).validateEmpty(value: value),
                                 ),
                               ],
                             ),
@@ -87,9 +87,9 @@ class _LoginState extends State<Login> with LoginData{
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           InkWell(
-                            // onTap: () => ExtendedNavigator.of(context).push(Routes.forgetPassword),
+                            onTap: () => AutoRouter.of(context).pushPath(ForgetPasswordRoute.name),
                             child: MyText(
-                              title: "${("forgetPassword")}",
+                              title: "${tr(context,"forgetPassword")}",
                               size: 10,
                               color: MyColors.blackOpacity,
                               decoration: TextDecoration.underline,
@@ -104,7 +104,7 @@ class _LoginState extends State<Login> with LoginData{
                     //login button
                     Visibility(
                       child: DefaultButton(
-                        title: ("login"), //"تسجيل دخول",
+                        title: tr(context,"login"), //"تسجيل دخول",
                         margin: EdgeInsets.all(30),
                         onTap: ()=>setUserLogin(context),
                       ),
@@ -138,7 +138,7 @@ class _LoginState extends State<Login> with LoginData{
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           MyText(
-                            title: ("don'tHaveAccount"),
+                            title: tr(context,"don'tHaveAccount"),
                             size: 12,
                             color: Colors.grey,
                           ),
@@ -146,9 +146,9 @@ class _LoginState extends State<Login> with LoginData{
                             width: 5,
                           ),
                           InkWell(
-                              // onTap: ()=>ExtendedNavigator.of(context).push(Routes.register),
+                              onTap: ()=>AutoRouter.of(context).pushPath(RegisterRoute.name),
                               child: MyText(
-                                title: ("register"),
+                                title: tr(context,"register"),
                                 size: 12,
                                 color: MyColors.primary,
                               )),

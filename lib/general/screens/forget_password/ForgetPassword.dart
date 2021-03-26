@@ -29,7 +29,7 @@ class _ForgetPasswordState extends State<ForgetPassword>  with ForgetPasswordDat
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       MyText(
-                        title:("forgetPassword"),
+                        title:tr(context,"forgetPassword"),
                         size: 12,
                         color: MyColors.black,
                         alien: TextAlign.center,
@@ -60,12 +60,12 @@ class _ForgetPasswordState extends State<ForgetPassword>  with ForgetPasswordDat
         child: LabelTextField(
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           type: TextInputType.number,
-          label: ("phone"),
+          label: tr(context,"phone"),
           isPassword: false,
           controller: phone,
           action: TextInputAction.done,
           onSubmit: ()=>setForgetPassword(context),
-          validate: (value)=> value.validatePhone(),
+          validate: (value)=> Validator(context).validatePhone(value: value),
         ),
       ),
     );
@@ -85,7 +85,7 @@ class _ForgetPasswordState extends State<ForgetPassword>  with ForgetPasswordDat
           ),
           alignment: Alignment.center,
           child: MyText(
-            title: "${("send")}",
+            title: "${tr(context,"send")}",
             size: 12,
             color: Colors.white,
           ),

@@ -1,0 +1,23 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:base_flutter/customer/models/DropDownModel.dart';
+import 'package:base_flutter/customer/models/Dtos/AddAdsModel.dart';
+import 'package:base_flutter/customer/models/Dtos/LocationModel.dart';
+import 'package:base_flutter/customer/resources/CustomerRepository.dart';
+import 'package:base_flutter/customer/screens/location_address/location_cubit/location_cubit.dart';
+import 'package:base_flutter/general/constants/Inputs/DropdownTextField.dart';
+import 'package:base_flutter/general/constants/Inputs/InkWellTextField.dart';
+import 'package:base_flutter/general/constants/Inputs/custom_dropDown/CustomDropDown.dart';
+import 'package:base_flutter/general/constants/ModaLs/LoadingDialog.dart';
+import 'package:base_flutter/general/constants/MyColors.dart';
+import 'package:base_flutter/general/utilities/routers/RouterImports.gr.dart';
+import 'package:base_flutter/general/utilities/utils_functions/UtilsImports.dart';
+import 'package:base_flutter/general/utilities/validator/Validator.dart';
+import 'package:base_flutter/general/widgets/DefaultAppBar.dart';
+import 'package:base_flutter/general/widgets/MyText.dart';
+import 'package:location/location.dart';
+
+part 'AddOfferLocation.dart';
+part 'AddOfferLocData.dart';
