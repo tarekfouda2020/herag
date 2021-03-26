@@ -1,40 +1,41 @@
 {
   "project_info": {
-    "project_number": "590499560296",
-    "project_id": "flutter-base-a428c",
-    "storage_bucket": "flutter-base-a428c.appspot.com"
+    "project_number": "710954766183",
+    "firebase_url": "https://herag-c3758.firebaseio.com",
+    "project_id": "herag-c3758",
+    "storage_bucket": "herag-c3758.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:590499560296:android:a7b3a0d19abcd4d73674dd",
+        "mobilesdk_app_id": "1:710954766183:android:1db3c9dc2f7e3ec48569c2",
         "android_client_info": {
-          "package_name": "sa.aait.aspbranch.baseFlutter"
+          "package_name": "sa.aait.asp.herag"
         }
       },
       "oauth_client": [
         {
-          "client_id": "590499560296-fe5ijjgktqdm8qhacp621e6t3btjqj0i.apps.googleusercontent.com",
+          "client_id": "710954766183-ls78b7unmhgttjontjuijlbnhh4jiibm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBWWwNklL6kn2iGdgjYGKm3qGEfUMXpLNY"
+          "current_key": "AIzaSyDBFJ8MSSl9M_lhQqIb2VT8PWKZao1800s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "590499560296-fe5ijjgktqdm8qhacp621e6t3btjqj0i.apps.googleusercontent.com",
+              "client_id": "710954766183-ls78b7unmhgttjontjuijlbnhh4jiibm.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "590499560296-0gp7c8qda4idesf8vikvv45r2s3r3t7r.apps.googleusercontent.com",
+              "client_id": "710954766183-g4p94dmamm2i8i0l3s72eo0gmo8cn4q3.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "sa.aait.aspbranch.basestruct"
+                "bundle_id": "sa.aait.asp.herag"
               }
             }
           ]
@@ -43,34 +44,34 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:590499560296:android:c58b54d86786b03e3674dd",
+        "mobilesdk_app_id": "1:710954766183:android:37977253861af6598569c2",
         "android_client_info": {
-          "package_name": "sa.aait.aspbranch.basestruct"
+          "package_name": "sa.aait.asp.herag.awmer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "590499560296-fe5ijjgktqdm8qhacp621e6t3btjqj0i.apps.googleusercontent.com",
+          "client_id": "710954766183-ls78b7unmhgttjontjuijlbnhh4jiibm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBWWwNklL6kn2iGdgjYGKm3qGEfUMXpLNY"
+          "current_key": "AIzaSyDBFJ8MSSl9M_lhQqIb2VT8PWKZao1800s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "590499560296-fe5ijjgktqdm8qhacp621e6t3btjqj0i.apps.googleusercontent.com",
+              "client_id": "710954766183-ls78b7unmhgttjontjuijlbnhh4jiibm.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "590499560296-0gp7c8qda4idesf8vikvv45r2s3r3t7r.apps.googleusercontent.com",
+              "client_id": "710954766183-g4p94dmamm2i8i0l3s72eo0gmo8cn4q3.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "sa.aait.aspbranch.basestruct"
+                "bundle_id": "sa.aait.asp.herag"
               }
             }
           ]
