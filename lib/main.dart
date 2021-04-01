@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'general/blocs/lang_cubit/lang_cubit.dart';
 import 'general/utilities/localization/SetLocalization.dart';
 import 'general/utilities/moor_db/db.dart';
@@ -18,7 +19,7 @@ void main()async{
   runApp(
     BlocProvider(
       create: (BuildContext context) => LangCubit(),
-      child: MyApp(),
+      child: Phoenix(child: MyApp()),
     )
   );
 }

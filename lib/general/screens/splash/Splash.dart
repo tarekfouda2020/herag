@@ -20,15 +20,9 @@ class _SplashState extends State<Splash> {
 
   @override
   void initState() {
-    _checkingData();
+    Utils.manipulateSplashData(context);
     super.initState();
   }
-
-  _checkingData()async{
-   GlobalNotification.instance.setupNotification(context: context);
-    Utils.manipulateSplashData(context);
-  }
-
 
 
   @override

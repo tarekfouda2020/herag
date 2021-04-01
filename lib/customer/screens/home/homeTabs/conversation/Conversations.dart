@@ -68,8 +68,7 @@ class _ConversationsState extends State<Conversations> with ConversationData {
 
   _buildChatItem({int index,ChatModel model,UserModel user}){
     return InkWell(
-      onTap: ()=>AutoRouter.of(context).push(ChatRoute(receiverId: model.userId,userName: model.userName,senderId: user.id)
-      ),
+      onTap: ()=>navigateToChat(context, model, user),
       child: Container(
           padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
           decoration: BoxDecoration(

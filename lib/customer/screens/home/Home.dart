@@ -15,6 +15,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin, HomeData {
   void initState() {
     initBottomNavigation(this);
     animateTabsPages(widget.tab, context);
+    GlobalNotification.instance.setupNotification(context: context);
     // NewVersion(
     //   context: context,
     //   iOSId: 'sa.aait.asp.base_flutter.awmer',

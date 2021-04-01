@@ -19,8 +19,6 @@ class GlobalNotification {
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
-  int _id = 0;
-  bool show = true;
   BuildContext _context;
   static GlobalNotification instance = new GlobalNotification._();
 
@@ -48,12 +46,11 @@ class GlobalNotification {
       sound: true,
     );
     FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(alert: true,badge: true,sound: true);
-    messaging.getInitialMessage().then((message) => _showLocalNotification(message, _id));
+    messaging.getInitialMessage().then((message) => _showLocalNotification(message));
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print("_____________________notification:${message.notification}");
       print("_____________________Message data:${message.data}");
-      _id++;
-      _showLocalNotification(message, _id);
+      _showLocalNotification(message);
       _onMessageStreamController.add(message.data);
       if (int.parse(message.data["type"]) == -1) {
         Utils.clearSavedData();
@@ -72,23 +69,22 @@ class GlobalNotification {
 
   Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     print("Handling a background message: ${message..messageId}");
-    _id++;
     await Firebase.initializeApp();
-    _showLocalNotification(message, _id);
+    _showLocalNotification(message);
   }
 
   StreamController<Map<String, dynamic>> get notificationSubject {
     return _onMessageStreamController;
   }
 
-  _showLocalNotification(RemoteMessage message, id) async {
+  _showLocalNotification(RemoteMessage message) async {
     if (message == null || message.notification == null) return;
-    // int _type = int.parse(message.data["type"]??"0");
-    // if(_type==9){
-    //   _context.read<ChatCountCubit>().onUpdateCount(_context.read<ChatCountCubit>().state.count+1);
-    // }else{
-    //   _context.read<NotifyCountCubit>().onUpdateCount(_context.read<NotifyCountCubit>().state.count+1);
-    // }
+    int _type = int.parse(message.data["type"]??"0");
+    if(_type==9){
+      _context.read<ChatCountCubit>().onUpdateCount(_context.read<ChatCountCubit>().state.count+1);
+    }else{
+      _context.read<NotifyCountCubit>().onUpdateCount(_context.read<NotifyCountCubit>().state.count+1);
+    }
 
     var android = AndroidNotificationDetails(
       "${DateTime.now()}",
@@ -97,12 +93,12 @@ class GlobalNotification {
       priority: Priority.high,
       importance: Importance.max,
       playSound: true,
-      shortcutId: "$_id",
+      shortcutId: DateTime.now().toIso8601String(),
     );
     var ios = IOSNotificationDetails();
     var _platform = NotificationDetails(android: android, iOS: ios);
     _flutterLocalNotificationsPlugin.show(
-        id, "${message.data["title"]}", "${message.data["body"]}", _platform,
+        DateTime.now().microsecond, "${message.data["title"]}", "${message.data["body"]}", _platform,
         payload: json.encode(message.data));
   }
 
