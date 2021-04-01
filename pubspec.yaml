@@ -81,13 +81,13 @@ dependencies:
 
 
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
   auto_route_generator: ^1.0.2
   build_runner:
   moor_generator:
+
 
 
 flutter_icons:

@@ -20,7 +20,7 @@ class CustomerChatMethods{
       "lang":lang,
       "UserId":user.id
     };
-    var _data = await DioHelper(forceRefresh: refresh).get("/api/v1/ListUsersMyChat", body);
+    var _data = await DioHelper(forceRefresh: refresh,context: context).get("/api/v1/ListUsersMyChat", body);
     if(_data!=null){
       return List<ChatModel>.from(_data["data"].map((e) => ChatModel.fromMap(e)));
     }else{
@@ -36,7 +36,7 @@ class CustomerChatMethods{
       "ReceiverId":ReceiverId,
       "SenderId":user.id
     };
-    var _data = await DioHelper(forceRefresh: true).get("/api/v1/GetAllMessageBetweenTwoUser", body);
+    var _data = await DioHelper(forceRefresh: true,context: context).get("/api/v1/GetAllMessageBetweenTwoUser", body);
     if(_data!=null){
       context.read<ChatCountCubit>().onUpdateCount(_data["countChat"]??0);
       return List<MessageModel>.from(_data["data"].map((e) => MessageModel.fromMap(e)));
@@ -52,7 +52,7 @@ class CustomerChatMethods{
       "fkUser":id,
       "reason":reason
     };
-    var _data = await DioHelper().post("/api/v1/AddReporToUser", body);
+    var _data = await DioHelper(context: context).post("/api/v1/AddReporToUser", body);
     return (_data!=null);
   }
 

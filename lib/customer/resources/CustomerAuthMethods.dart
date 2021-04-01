@@ -26,7 +26,7 @@ class CustomerAuthMethods{
       "lang":lang,
       "Phone":phone
     };
-    var _data= await DioHelper().get("/api/v1/Send_code", body);
+    var _data= await DioHelper(context: context).get("/api/v1/Send_code", body);
     if(_data!=null){
       return RegisterModel(phone: phone,lang: lang,code: "${_data["date"]["code"]}");
     }else{
@@ -41,7 +41,7 @@ class CustomerAuthMethods{
       "newPassword":newPassword,
       "oldPassword":oldPassword
     };
-    var _data= await DioHelper().post("/api/v1/ChangePassward", body);
+    var _data= await DioHelper(context: context).post("/api/v1/ChangePassward", body);
     return _data!=null;
   }
 
@@ -51,7 +51,7 @@ class CustomerAuthMethods{
       "lang":lang,
       "Phone": model.phone
     };
-    var _data= await DioHelper().post("/api/v1/Send_code", body);
+    var _data= await DioHelper(context: context).post("/api/v1/Send_code", body);
     if(_data!=null){
       model.code=_data["date"]["code"].toString();
       return model;
@@ -61,7 +61,7 @@ class CustomerAuthMethods{
   }
 
   Future<bool> userRegister(RegisterModel model)async{
-    var _data= await DioHelper().post("/api/v1/register", model.toJson());
+    var _data= await DioHelper(context: context).post("/api/v1/register", model.toJson());
     if(_data!=null){
       return true;
     }else{
@@ -70,7 +70,7 @@ class CustomerAuthMethods{
   }
 
   Future<bool> updateUserData(UpdateProfileModel model)async{
-    var _data= await DioHelper().uploadFile("/api/v1/UpdateDataUser", model.toJson());
+    var _data= await DioHelper(context: context).uploadFile("/api/v1/UpdateDataUser", model.toJson());
     if(_data!=null){
       UserModel user=UserModel.fromJson(_data["data"]);
       user.token=GlobalState.instance.get("token");
@@ -87,7 +87,7 @@ class CustomerAuthMethods{
     Map<String , dynamic> body={
       "lang":lang,
     };
-    var _data= await DioHelper().get("/api/v1/ListReasonContactUs", body);
+    var _data= await DioHelper(context: context).get("/api/v1/ListReasonContactUs", body);
     if(_data!=null){
       return List<DropDownModel>.from(_data["data"].map((e) => DropDownModel.fromMap(e)));
     }else{
@@ -100,7 +100,7 @@ class CustomerAuthMethods{
     Map<String , dynamic> body={
       "lang":lang,
     };
-    var _data= await DioHelper().get("/api/v1/GetInfoContact", body);
+    var _data= await DioHelper(context: context).get("/api/v1/GetInfoContact", body);
     if(_data!=null){
       return ContactModel.fromMap(_data["data"]);
     }else{
@@ -117,7 +117,7 @@ class CustomerAuthMethods{
       "Message":msg,
       "FileName":file
     };
-    var _data= await DioHelper().uploadFile("/api/v1/AddContactUsByReason", body);
+    var _data= await DioHelper(context: context).uploadFile("/api/v1/AddContactUsByReason", body);
     if(_data!=null){
       return true;
     }else{

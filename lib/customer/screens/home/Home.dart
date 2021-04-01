@@ -15,15 +15,15 @@ class _HomeState extends State<Home> with TickerProviderStateMixin, HomeData {
   void initState() {
     initBottomNavigation(this);
     animateTabsPages(widget.tab, context);
-    NewVersion(
-      context: context,
-      iOSId: 'sa.aait.asp.base_flutter.awmer',
-      androidId: 'sa.aait.asp.base_flutter.awmer',
-      dialogText: "يمكنك التحديث الان للاستمتاع باجدد المميزات .",
-      dialogTitle: "لديك تحديث جديد",
-      dismissText: "التحديث لاحقا",
-      updateText: "تحديث"
-    ).showAlertIfNecessary();
+    // NewVersion(
+    //   context: context,
+    //   iOSId: 'sa.aait.asp.base_flutter.awmer',
+    //   androidId: 'sa.aait.asp.base_flutter.awmer',
+    //   dialogText: "يمكنك التحديث الان للاستمتاع باجدد المميزات .",
+    //   dialogTitle: "لديك تحديث جديد",
+    //   dismissText: "التحديث لاحقا",
+    //   updateText: "تحديث"
+    // ).showAlertIfNecessary();
     super.initState();
   }
 

@@ -14,6 +14,7 @@ class ChatModel{
   });
 
   int id;
+  int count;
   String userId;
   String userName;
   String lastMessage;

@@ -38,14 +38,12 @@ class _FollowerAdsState extends State<FollowerAds> {
 
 
   Widget _buildProductsView(List<AdsModel> ads){
-    return Flexible(
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-        itemCount: ads.length,
-        itemBuilder: (context,index){
-          return _buildProductSlideView(index: index,model: ads[index],);
-        },
-      ),
+    return ListView.builder(
+      physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      itemCount: ads.length,
+      itemBuilder: (context,index){
+        return _buildProductSlideView(index: index,model: ads[index],);
+      },
     );
   }
 

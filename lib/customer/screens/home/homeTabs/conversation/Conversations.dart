@@ -89,7 +89,8 @@ class _ConversationsState extends State<Conversations> with ConversationData {
                     haveRadius: false,
                     fit: BoxFit.cover,
                     boxShape: BoxShape.circle,
-                  ),                    SizedBox(width: 5,),
+                  ),
+                  SizedBox(width: 5,),
                   MyText(title: model.userName ,size: 10,color: MyColors.black,),
                   Spacer(),
                   MyText(title: model.date ,size: 8,color: MyColors.blackOpacity,),
@@ -101,11 +102,26 @@ class _ConversationsState extends State<Conversations> with ConversationData {
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   children: [
-                    MyText(
-                      title: model.lastMessage,
-                      size: 8,
-                      color: MyColors.blackOpacity,
+                    Expanded(
+                      child: MyText(
+                        title: model.lastMessage,
+                        size: model.count>0?12:8,
+                        color: model.count>0? MyColors.black : MyColors.blackOpacity,
+                      ),
                     ),
+                    Offstage(
+                      offstage: model.count==0,
+                      child: Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                            boxShadow: [BoxShadow(color: Colors.red,spreadRadius: 1,blurRadius: 1)]
+                        ),
+                        // child: Text("${model.count}",style: TextStyle(color: MyColors.white,fontSize: 10),),
+                      ),
+                    )
                   ],
                 ),
               ),

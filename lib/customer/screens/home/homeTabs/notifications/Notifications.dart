@@ -98,7 +98,7 @@ class _NotificationsState extends State<Notifications> with NotificationsData {
                 MyText(
                   title: model.text,
                   size: 10,
-                  color: MyColors.blackOpacity,
+                  color: model.show? MyColors.blackOpacity : MyColors.primary,
                 ),
               ],
             ),

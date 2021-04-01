@@ -14,8 +14,11 @@ class _ProductDetailsState extends State<ProductDetails> with ProDetailsData {
   void initState() {
     if(widget.info!=null){
       productDetailsCubit.onModelUpdated(AdsDetailsModel(adsData: widget.info,relatedAds: []),favouriteCubit,commentCubit);
+    }else{
+      productDetailsCubit.fetchAdsDetails(context, widget.model.id, favouriteCubit,commentCubit,refresh: false);
+
     }
-    productDetailsCubit.fetchAdsDetails(context, widget.model.id, favouriteCubit,commentCubit,refresh: true);
+    productDetailsCubit.fetchAdsDetails(context, widget.model.id, favouriteCubit,commentCubit);
     super.initState();
   }
 
@@ -249,6 +252,7 @@ class _ProductDetailsState extends State<ProductDetails> with ProDetailsData {
     );
   }
 
+
   Widget _buildProductImages(BuildContext context,List<ImageModel> images){
 
     return Column(
@@ -260,15 +264,17 @@ class _ProductDetailsState extends State<ProductDetails> with ProDetailsData {
             child: CachedImage(
               url: images[index].url,
               width: MediaQuery.of(context).size.width,
-              height: 250,
-              fit: BoxFit.contain,
-              borderColor: MyColors.greyWhite,
+              height: 160,
+              fit: BoxFit.fill,
+              borderColor: MyColors.blackOpacity,
             ),
           ),
         );
       }),
     );
   }
+
+
 
   Widget _buildContactView(BuildContext context,AdsDataModel data,UserModel user){
     return Container(
