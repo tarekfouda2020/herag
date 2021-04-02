@@ -17,7 +17,6 @@ class GlobalNotification {
   static StreamController<Map<String, dynamic>> _onMessageStreamController =
       StreamController.broadcast();
 
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
   BuildContext _context;
   static GlobalNotification instance = new GlobalNotification._();
@@ -36,35 +35,32 @@ class GlobalNotification {
       initSettings,
       onSelectNotification: flutterNotificationClick,
     );
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(alert: true,badge: true,sound: true);
-    messaging.getInitialMessage().then((message) => _showLocalNotification(message));
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("_____________________notification:${message.notification}");
-      print("_____________________Message data:${message.data}");
-      _showLocalNotification(message);
-      _onMessageStreamController.add(message.data);
-      if (int.parse(message.data["type"]) == -1) {
-        Utils.clearSavedData();
-        context.router.push(LoginRoute());
-      }
-    });
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
-      flutterNotificationClick(json.encode(message.data));
-    });
-    messaging.getToken().then((token) {
-      print(token);
-    });
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(provisional: true);
+    print('User granted permission: ${settings.authorizationStatus}');
+    if(settings.authorizationStatus==AuthorizationStatus.authorized){
+      messaging.getToken().then((token) {
+        print(token);
+      });
+      messaging.setForegroundNotificationPresentationOptions(alert: true,badge: true,sound: true);
+      // messaging.getInitialMessage().then((message) => _showLocalNotification(message));
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        print("_____________________Message data:${message.data}");
+        print("_____________________notification:${message.notification.title}");
+        _showLocalNotification(message);
+        _onMessageStreamController.add(message.data);
+        if (int.parse(message.data["type"]) == -1) {
+          Utils.clearSavedData();
+          context.router.push(LoginRoute());
+        }
+      });
+      // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        print('A new onMessageOpenedApp event was published!');
+        flutterNotificationClick(json.encode(message.data));
+      });
+    }
+
   }
 
   Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -78,18 +74,17 @@ class GlobalNotification {
   }
 
   _showLocalNotification(RemoteMessage message) async {
-    if (message == null || message.notification == null) return;
+    if (message == null) return;
     int _type = int.parse(message.data["type"]??"0");
     if(_type==9){
       _context.read<ChatCountCubit>().onUpdateCount(_context.read<ChatCountCubit>().state.count+1);
     }else{
       _context.read<NotifyCountCubit>().onUpdateCount(_context.read<NotifyCountCubit>().state.count+1);
     }
-
     var android = AndroidNotificationDetails(
       "${DateTime.now()}",
-      "${message.data["title"]}",
-      "${message.data["body"]}",
+      "${message.notification.title}",
+      "${message.notification.body}",
       priority: Priority.high,
       importance: Importance.max,
       playSound: true,
@@ -98,7 +93,7 @@ class GlobalNotification {
     var ios = IOSNotificationDetails();
     var _platform = NotificationDetails(android: android, iOS: ios);
     _flutterLocalNotificationsPlugin.show(
-        DateTime.now().microsecond, "${message.data["title"]}", "${message.data["body"]}", _platform,
+        DateTime.now().microsecond, "${message.notification.title}", "${message.notification.body}", _platform,
         payload: json.encode(message.data));
   }
 

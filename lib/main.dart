@@ -15,7 +15,7 @@ import 'main.mapper.g.dart' show initializeJsonMapper;
 void main()async{
   initializeJsonMapper();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+   await Firebase.initializeApp();
   runApp(
     BlocProvider(
       create: (BuildContext context) => LangCubit(),
