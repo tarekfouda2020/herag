@@ -22,6 +22,8 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>NSCalendarsUsageDescription</key>
 	<string>This app requires calender access to function properly</string>
 	<key>NSCameraUsageDescription</key>
