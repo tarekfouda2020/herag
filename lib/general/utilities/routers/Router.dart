@@ -4,7 +4,7 @@ part of 'RouterImports.dart';
 @AdaptiveAutoRouter(
   routes: <AutoRoute>[
     //general routes
-    AutoRoute(page: Splash, initial: true,),
+    AutoRoute(page: AnimatedSplash, initial: true,),
     AutoRoute(page: Login),
     AutoRoute(page: Register),
     AutoRoute(page: RegisterComplete),

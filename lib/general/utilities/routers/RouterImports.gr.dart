@@ -80,7 +80,7 @@ import 'package:base_flutter/general/screens/remote_page/RemotePage.dart'
     as _i9;
 import 'package:base_flutter/general/screens/reset_password/ResetPasswordImports.dart'
     as _i8;
-import 'package:base_flutter/general/screens/splash/Splash.dart' as _i2;
+import 'package:base_flutter/general/screens/splash/AnimatedSplash.dart' as _i2;
 import 'package:base_flutter/general/screens/Terms.dart' as _i10;
 import 'package:flutter/material.dart' as _i40;
 
@@ -89,8 +89,8 @@ class AppRouter extends _i1.RootStackRouter {
 
   @override
   final Map<String, _i1.PageFactory> pagesMap = {
-    SplashRoute.name: (entry) {
-      return _i1.AdaptivePage(entry: entry, child: _i2.Splash());
+    AnimatedSplashRoute.name: (entry) {
+      return _i1.AdaptivePage(entry: entry, child: _i2.AnimatedSplash());
     },
     LoginRoute.name: (entry) {
       return _i1.AdaptivePage(entry: entry, child: _i3.Login());
@@ -289,7 +289,7 @@ class AppRouter extends _i1.RootStackRouter {
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(SplashRoute.name, path: '/'),
+        _i1.RouteConfig(AnimatedSplashRoute.name, path: '/'),
         _i1.RouteConfig(LoginRoute.name, path: '/Login'),
         _i1.RouteConfig(RegisterRoute.name, path: '/Register'),
         _i1.RouteConfig(RegisterCompleteRoute.name, path: '/register-complete'),
@@ -334,10 +334,10 @@ class AppRouter extends _i1.RootStackRouter {
       ];
 }
 
-class SplashRoute extends _i1.PageRouteInfo {
-  const SplashRoute() : super(name, path: '/');
+class AnimatedSplashRoute extends _i1.PageRouteInfo {
+  const AnimatedSplashRoute() : super(name, path: '/');
 
-  static const String name = 'SplashRoute';
+  static const String name = 'AnimatedSplashRoute';
 }
 
 class LoginRoute extends _i1.PageRouteInfo {

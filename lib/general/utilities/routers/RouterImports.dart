@@ -37,6 +37,7 @@ import 'package:base_flutter/general/screens/forget_password/ForgetPasswordImpor
 import 'package:base_flutter/general/screens/login/LoginImports.dart';
 import 'package:base_flutter/general/screens/remote_page/RemotePage.dart';
 import 'package:base_flutter/general/screens/reset_password/ResetPasswordImports.dart';
+import 'package:base_flutter/general/screens/splash/AnimatedSplash.dart';
 import 'package:base_flutter/general/screens/splash/Splash.dart';
 
 part 'Router.dart';
