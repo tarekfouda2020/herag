@@ -157,6 +157,6 @@ class DioHelper {
 
   Future<void> logout() async {
     Utils.clearSavedData();
-    Phoenix.rebirth(context);
+    AutoRouter.of(context).popAndPush(LoginRoute());
   }
 }
