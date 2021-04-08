@@ -32,7 +32,7 @@ class _ProductDetailsState extends State<ProductDetails> with ProDetailsData {
           actions: [
             IconButton(
               icon: Icon(Icons.share_outlined,size: 25,color: MyColors.white,),
-              onPressed: () =>Utils.shareApp("${MainData.baseUrl}/Advertisement/GetAdvertisementDetails/${widget.model.id}"),
+              onPressed: () =>Utils.shareApp("$baseUrl/${widget.model.id}"),
             ),
           ],
         ),
