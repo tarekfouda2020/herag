@@ -18,7 +18,7 @@ class GlobalNotification {
       StreamController.broadcast();
 
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
-  BuildContext _context;
+  static BuildContext _context;
   static GlobalNotification instance = new GlobalNotification._();
 
   GlobalNotification._();
@@ -54,7 +54,7 @@ class GlobalNotification {
           context.router.push(LoginRoute());
         }
       });
-      // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         print('A new onMessageOpenedApp event was published!');
         flutterNotificationClick(json.encode(message.data));
@@ -63,10 +63,9 @@ class GlobalNotification {
 
   }
 
-  Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  static Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     print("Handling a background message: ${message..messageId}");
-    await Firebase.initializeApp();
-    _showLocalNotification(message);
+    flutterNotificationClick(json.encode(message.data));
   }
 
   StreamController<Map<String, dynamic>> get notificationSubject {
@@ -97,7 +96,7 @@ class GlobalNotification {
         payload: json.encode(message.data));
   }
 
-  Future flutterNotificationClick(String payload) async {
+  static Future flutterNotificationClick(String payload) async {
 
     print("tttttttttt $payload");
     var _data = json.decode(payload);
