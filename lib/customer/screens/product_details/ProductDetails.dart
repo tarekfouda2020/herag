@@ -48,7 +48,7 @@ class _ProductDetailsState extends State<ProductDetails> with ProDetailsData {
                       physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                       children: [
                         _buildHeader(context,state.model.adsData,user),
-                        _buildProductDetails(state.model.adsData.description,state.model.adsData.fromAppOrNo),
+                        _buildProductDetails(state.model.adsData),
                         _buildProductImages(context,state.model.adsData.allImg),
                         _buildContactView(context,state.model.adsData,user),
                         _buildCommentList(user,state.model.adsData),
@@ -221,23 +221,32 @@ class _ProductDetailsState extends State<ProductDetails> with ProDetailsData {
     );
   }
 
-  Widget _buildProductDetails(String details,bool fromApp){
+  Widget _buildProductDetails(AdsDataModel model){
     List<dynamic> descList=[];
-    if(fromApp){
-      descList = json.decode(details);
+    if(model.fromAppOrNo){
+      descList = json.decode(model.description);
     }
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-      child: Visibility(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: List.generate(descList.length, (index) {
-            return _buildDetailsItem(descList[index]);
-          }),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+          child: Visibility(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(descList.length, (index) {
+                return _buildDetailsItem(descList[index]);
+              }),
+            ),
+            visible: model.fromAppOrNo,
+            replacement: _buildDetailsItem(model.description),
+          ),
         ),
-        visible: fromApp,
-        replacement: _buildDetailsItem(details),
-      ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+          child: MyText(title: model.notes,size: 12,color: MyColors.black,),
+        )
+      ],
     );
   }
 

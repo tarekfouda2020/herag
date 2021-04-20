@@ -172,7 +172,7 @@ class OfferDetailsData{
     model.phone=phone.text;
     model.price=price.text;
     model.fromAppOrNo=true.toString();
-    model.showPhone=(!adsPhoneCubit.state.showPhone).toString();
+    model.showPhone=(adsPhoneCubit.state.showPhone).toString();
     model.determinePrice=(!adsPhoneCubit.state.showPrice).toString();
     model.lang=context.read<LangCubit>().state.locale.languageCode;
     model.description= json.encode(props);
