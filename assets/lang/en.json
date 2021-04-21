@@ -440,7 +440,9 @@
   "addAdsTitle": "add location for ads",
   "addAdsPrice": "add price for ads",
   "addAdsDept": "add sub department for ads",
-  "selectRegion": "select region"
+  "selectRegion": "select region",
+  "similarAds": "similar ads ",
+  "ads": "ads"
 }
 
 
