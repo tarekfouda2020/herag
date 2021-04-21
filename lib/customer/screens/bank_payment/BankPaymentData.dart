@@ -31,7 +31,7 @@ class BankPaymentData{
 
   void addPayment(BuildContext context)async{
     if(payCubit.state.image==null){
-      LoadingDialog.showSimpleToast("اضف صورة الايصال");
+      LoadingDialog.showSimpleToast(tr(context,"addReceipt"));
       return ;
     }
     if(formKey.currentState.validate()){

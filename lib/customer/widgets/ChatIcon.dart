@@ -6,6 +6,7 @@ class ChatIcon extends StatefulWidget {
   final Color color;
 
   const ChatIcon({@required this.color});
+
   @override
   _ChatIconState createState() => _ChatIconState();
 }
@@ -13,7 +14,7 @@ class ChatIcon extends StatefulWidget {
 class _ChatIconState extends State<ChatIcon> {
   @override
   Widget build(BuildContext context) {
-    var provider=context.watch<ChatCountCubit>();
+    var provider = context.watch<ChatCountCubit>();
     return Container(
       height: 36,
       width: 40,
@@ -25,14 +26,17 @@ class _ChatIconState extends State<ChatIcon> {
             left: 0,
             child: Container(
               padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle
-              ),
-                child: Text('${provider.state.count}',style: TextStyle(fontSize: 10,color: Colors.white)),
+              decoration:
+                  BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+              child: Text('${provider.state.count}',
+                  style: TextStyle(fontSize: 10, color: Colors.white)),
             ),
           ),
-          Icon(Icons.mail_outline, color: widget.color,size: 25,),
+          Icon(
+            Icons.mail_outline,
+            color: widget.color,
+            size: 25,
+          ),
         ],
       ),
     );

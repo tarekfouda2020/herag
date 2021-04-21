@@ -14,7 +14,7 @@ class _AddOfferImagesState extends State<AddOfferImages> with AddImagesData {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(con: context,title: "صور الإعلان",),
+      appBar: DefaultAppBar(con: context,title: tr(context,"adsImages"),),
       backgroundColor: MyColors.white,
       body: _buildViewContainer(context),
     );
@@ -23,7 +23,7 @@ class _AddOfferImagesState extends State<AddOfferImages> with AddImagesData {
   Widget _buildViewContainer(BuildContext context){
     return Column(
       children: [
-        _buildImageType("اضف ٥ صور للاعلان",true,context),
+        _buildImageType(tr(context,"addAdsImg"),true,context),
         BlocBuilder<AddAdsImagesCubit,AddAdsImagesState>(
           bloc: addOfferCubit,
           builder: (context,state){
@@ -39,7 +39,7 @@ class _AddOfferImagesState extends State<AddOfferImages> with AddImagesData {
         ),
         DefaultButton(
           margin: EdgeInsets.all(20),
-          title: "استمرار",
+          title: tr(context,"continue"),
           onTap: ()=>navigateToDetails(context,widget.model),
         ),
       ],
@@ -107,7 +107,7 @@ class _AddOfferImagesState extends State<AddOfferImages> with AddImagesData {
           ),
         ),
         alignment: Alignment.center,
-        child: MyText(title: "استمرار",size: 12,color: MyColors.white,),
+        child: MyText(title: tr(context,"continue"),size: 12,color: MyColors.white,),
       ),
     );
   }

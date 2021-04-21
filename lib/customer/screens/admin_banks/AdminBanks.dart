@@ -17,7 +17,7 @@ class _AdminBanksState extends State<AdminBanks> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(title: "دفع العمولة", con: context),
+      appBar: DefaultAppBar(title: tr(context,"payCommission"), con: context),
       body: BlocBuilder<BanksCubit,BanksState>(
         bloc: banksCubit,
         builder: (_,state){
@@ -64,19 +64,19 @@ class _AdminBanksState extends State<AdminBanks> {
                 MyText(title: model.beneficiaryName,size: 12,color: MyColors.primary,),
                 Row(
                   children: [
-                    MyText(title: "اسم البنك : ",size: 10,color: MyColors.blackOpacity,),
+                    MyText(title: "${tr(context,"nameBank")} : ",size: 10,color: MyColors.blackOpacity,),
                     MyText(title: model.bannkName,size: 10,color: MyColors.black,),
                   ],
                 ),
                 Row(
                   children: [
-                    MyText(title: "رقم الحساب : ",size: 10,color: MyColors.blackOpacity,),
+                    MyText(title: "${tr(context,"accountNumb")} : ",size: 10,color: MyColors.blackOpacity,),
                     MyText(title: model.accountNumber,size: 10,color: MyColors.black,),
                   ],
                 ),
                 Row(
                   children: [
-                      MyText(title: "رقم الايبان : ",size: 10,color: MyColors.blackOpacity,),
+                      MyText(title: "${tr(context,"ibnNumb")} : ",size: 10,color: MyColors.blackOpacity,),
                     MyText(title: model.ibandNumber,size: 10,color: MyColors.black,),
                   ],
                 ),

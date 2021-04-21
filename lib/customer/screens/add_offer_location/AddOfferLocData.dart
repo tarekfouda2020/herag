@@ -31,7 +31,7 @@ class AddOfferLocData{
   void navigateToAddDetails(AddAdsModel model,BuildContext context){
     if(formKey.currentState.validate()){
       if(address.text.isEmpty){
-        LoadingDialog.showSimpleToast("قم بتحديد العنوان");
+        LoadingDialog.showSimpleToast(tr(context,"selectLocation"));
         return;
       }
       LocationModel locationModel=context.read<LocationCubit>().state.model;

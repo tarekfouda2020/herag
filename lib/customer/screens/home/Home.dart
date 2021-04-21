@@ -120,7 +120,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin, HomeData {
             ),
           ),
           MyText(
-            title: tabs[index].title,
+            title: tr(context, tabs[index].title),
             size: 10,
             color: color,
           )

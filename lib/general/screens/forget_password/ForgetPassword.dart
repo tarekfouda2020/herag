@@ -5,38 +5,42 @@ class ForgetPassword extends StatefulWidget {
   State<StatefulWidget> createState() => _ForgetPasswordState();
 }
 
-class _ForgetPasswordState extends State<ForgetPassword>  with ForgetPasswordData {
-
+class _ForgetPasswordState extends State<ForgetPassword>
+    with ForgetPasswordData {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffold,
-      body: BlocBuilder<ForgetPasswordCubit,ForgetPasswordState>(
+      body: BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
         bloc: forgetPasswordCubit,
-        builder: (context,state){
+        builder: (context, state) {
           return IgnorePointer(
             ignoring: state.showLoading,
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: ListView(
-                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                padding: EdgeInsets.symmetric(vertical: 20,horizontal: 15),
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                 children: <Widget>[
-
                   HeaderLogo(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       MyText(
-                        title:tr(context,"forgetPassword"),
+                        title: tr(context, "forgetPassword"),
                         size: 12,
                         color: MyColors.black,
                         alien: TextAlign.center,
                       ),
                       IconButton(
-                        icon: Icon(Icons.arrow_forward_ios,size: 25,color: MyColors.primary,),
-                        onPressed: ()=> Navigator.of(context).pop(),
+                        icon: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 25,
+                          color: MyColors.primary,
+                        ),
+                        onPressed: () => Navigator.of(context).pop(),
                       )
                     ],
                   ),
@@ -51,8 +55,7 @@ class _ForgetPasswordState extends State<ForgetPassword>  with ForgetPasswordDat
     );
   }
 
-
-  Widget _buildFormInputs(){
+  Widget _buildFormInputs() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 50),
       child: Form(
@@ -60,21 +63,21 @@ class _ForgetPasswordState extends State<ForgetPassword>  with ForgetPasswordDat
         child: LabelTextField(
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           type: TextInputType.number,
-          label: tr(context,"phone"),
+          label: tr(context, "phone"),
           isPassword: false,
           controller: phone,
           action: TextInputAction.done,
-          onSubmit: ()=>setForgetPassword(context),
-          validate: (value)=> Validator(context).validatePhone(value: value),
+          onSubmit: () => setForgetPassword(context),
+          validate: (value) => Validator(context).validatePhone(value: value),
         ),
       ),
     );
   }
 
-  Widget _buildConfirmButton(bool showLoading){
+  Widget _buildConfirmButton(bool showLoading) {
     return Visibility(
       child: InkWell(
-        onTap: ()=>setForgetPassword(context),
+        onTap: () => setForgetPassword(context),
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: 45,
@@ -85,7 +88,7 @@ class _ForgetPasswordState extends State<ForgetPassword>  with ForgetPasswordDat
           ),
           alignment: Alignment.center,
           child: MyText(
-            title: "${tr(context,"send")}",
+            title: "${tr(context, "send")}",
             size: 12,
             color: Colors.white,
           ),
@@ -98,5 +101,4 @@ class _ForgetPasswordState extends State<ForgetPassword>  with ForgetPasswordDat
       ),
     );
   }
-
 }

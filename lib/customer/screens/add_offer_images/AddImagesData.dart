@@ -23,7 +23,7 @@ class AddImagesData{
   void navigateToDetails(BuildContext context,OffersHeaderModel headerModel){
     var images=addOfferCubit.state.images;
     if(images.length>5){
-      LoadingDialog.showSimpleToast("ادخل علي الاكثر ٥ صور");
+      LoadingDialog.showSimpleToast(tr(context,"enterAtLeastImage"));
       return;
     }
     if(images.length>0){
@@ -34,7 +34,7 @@ class AddImagesData{
       AutoRouter.of(context).push(AddOfferLocationRoute(model: model)
       );
     }else{
-      LoadingDialog.showSimpleToast("قم بادخال صور الإعلان");
+      LoadingDialog.showSimpleToast(tr(context,"enterAdsImg"));
     }
 
   }

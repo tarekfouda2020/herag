@@ -1,23 +1,23 @@
-part of  'UserProductsImports.dart';
-
+part of 'UserProductsImports.dart';
 
 class UserProducts extends StatefulWidget {
   final String userId;
   final String userName;
-  const UserProducts({@required this.userId,@required this.userName});
+
+  const UserProducts({@required this.userId, @required this.userName});
+
   @override
   _UserProductsState createState() => _UserProductsState();
 }
 
 class _UserProductsState extends State<UserProducts> with UserProductsData {
-
   @override
   void initState() {
-    userAdsCubit.fetchUserAds(context, widget.userId,addOwnerCubit,refresh: false);
-    userAdsCubit.fetchUserAds(context, widget.userId,addOwnerCubit);
+    userAdsCubit.fetchUserAds(context, widget.userId, addOwnerCubit,
+        refresh: false);
+    userAdsCubit.fetchUserAds(context, widget.userId, addOwnerCubit);
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +29,17 @@ class _UserProductsState extends State<UserProducts> with UserProductsData {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeaderView(user),
-
           _buildProductContainer(),
         ],
       ),
     );
   }
 
-  Widget _buildHeaderView(UserModel user){
-    return BlocBuilder<AddOwnerCubit,AddOwnerState>(
+  Widget _buildHeaderView(UserModel user) {
+    return BlocBuilder<AddOwnerCubit, AddOwnerState>(
       bloc: addOwnerCubit,
-      builder: (context,state){
-        if(state is AddOwnerUpdated){
+      builder: (context, state) {
+        if (state is AddOwnerUpdated) {
           print(state.model.toJson());
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +57,11 @@ class _UserProductsState extends State<UserProducts> with UserProductsData {
                       boxShape: BoxShape.circle,
                     ),
                   ),
-                  MyText(title: state.model.userName ,size: 10,color: MyColors.black,),
+                  MyText(
+                    title: state.model.userName,
+                    size: 10,
+                    color: MyColors.black,
+                  ),
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -88,12 +91,17 @@ class _UserProductsState extends State<UserProducts> with UserProductsData {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MyText(title: "مشترك  ${state.model.publishDate}" ,size: 8,color: MyColors.blackOpacity,),
+                    MyText(
+                      title:
+                          "${tr(context, "shared")}  ${state.model.publishDate}",
+                      size: 8,
+                      color: MyColors.blackOpacity,
+                    ),
                     TitleButton(
                       padding: EdgeInsets.all(0),
                       iconData: Icons.chat,
-                      title: "التعليقات",
-                      onTap: ()=> navigateToComments(context,state.model),
+                      title: tr(context, "comments"),
+                      onTap: () => navigateToComments(context, state.model),
                     ),
                   ],
                 ),
@@ -102,19 +110,29 @@ class _UserProductsState extends State<UserProducts> with UserProductsData {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   RaisedButton.icon(
-                    onPressed: ()=> navigateToChat(context,widget.userId,widget.userName,user),
-                    icon: Icon(Icons.mail,size: 20,color: MyColors.black,),
-                    label: MyText(title: "مراسلة",size: 10,color: MyColors.black,),
+                    onPressed: () => navigateToChat(
+                        context, widget.userId, widget.userName, user),
+                    icon: Icon(
+                      Icons.mail,
+                      size: 20,
+                      color: MyColors.black,
+                    ),
+                    label: MyText(
+                      title: tr(context, "chatting"),
+                      size: 10,
+                      color: MyColors.black,
+                    ),
                     color: Colors.white,
                     elevation: 0,
                   ),
                   TitleButton(
                       iconData: Icons.wifi,
-                      title: "متابعة",
-                      iconColor: state.model.showFollow?MyColors.primary:Colors.black87,
-                      onTap: ()=>setAddUserToFollowers(context,widget.userId)
-                  ),
-
+                      title: tr(context, "following"),
+                      iconColor: state.model.showFollow
+                          ? MyColors.primary
+                          : Colors.black87,
+                      onTap: () =>
+                          setAddUserToFollowers(context, widget.userId)),
                 ],
               ),
               Visibility(
@@ -127,8 +145,8 @@ class _UserProductsState extends State<UserProducts> with UserProductsData {
                         padding: EdgeInsets.only(bottom: 10),
                         iconData: Icons.star,
                         iconColor: MyColors.black,
-                        title: "تقييم المستخدم",
-                        onTap: ()=>_buildRateUserDialog(context),
+                        title: tr(context, "rateUser"),
+                        onTap: () => _buildRateUserDialog(context),
                       ),
                     ],
                   ),
@@ -137,90 +155,101 @@ class _UserProductsState extends State<UserProducts> with UserProductsData {
               ),
             ],
           );
-        }else{
+        } else {
           return Container();
         }
       },
     );
   }
 
-  Widget _buildProductContainer(){
+  Widget _buildProductContainer() {
     return Flexible(
-      child: BlocBuilder<UserAdsCubit,UserAdsState>(
+      child: BlocBuilder<UserAdsCubit, UserAdsState>(
         bloc: userAdsCubit,
-        builder: (context,state){
-          if(state is UserAdsUpdated){
-            if(state.ads.length>0){
+        builder: (context, state) {
+          if (state is UserAdsUpdated) {
+            if (state.ads.length > 0) {
               return _builtProductsListView(state.ads);
-            }else{
+            } else {
               return Center(
-                child: MyText(title: "لايوجد بيانات",size: 12,color: MyColors.blackOpacity,),
+                child: MyText(
+                  title: tr(context, "NoData"),
+                  size: 12,
+                  color: MyColors.blackOpacity,
+                ),
               );
             }
-          }else{
+          } else {
             return _buildLoadingView();
           }
-
         },
       ),
     );
   }
 
-  Widget _buildLoadingView(){
-    return Center(
-      child: LoadingDialog.showLoadingView()
-    );
+  Widget _buildLoadingView() {
+    return Center(child: LoadingDialog.showLoadingView());
   }
 
-  Widget _builtProductsListView(List<AdsModel> products ){
+  Widget _builtProductsListView(List<AdsModel> products) {
     return CustomPullRefresh(
       controller: refreshController,
-      onRefresh: ()=>userAdsCubit..setRefreshUserAds(context, widget.userId,refreshController),
+      onRefresh: () => userAdsCubit
+        ..setRefreshUserAds(context, widget.userId, refreshController),
       child: ListView.builder(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         itemCount: products.length,
-        itemBuilder: (context,index){
-          return ProductRow(index: index,model: products[index],);
+        itemBuilder: (context, index) {
+          return ProductRow(
+            index: index,
+            model: products[index],
+          );
         },
       ),
     );
   }
 
-
-  void _buildRateUserDialog(BuildContext context){
+  void _buildRateUserDialog(BuildContext context) {
     showCupertinoDialog(
       context: context,
-      builder: (context){
-        return  AlertDialog(
+      builder: (context) {
+        return AlertDialog(
           backgroundColor: MyColors.white,
           titlePadding: EdgeInsets.all(0),
-          contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           title: Container(
             height: 40,
             padding: EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 color: MyColors.primary,
-                borderRadius: BorderRadius.circular(4)
-            ),
+                borderRadius: BorderRadius.circular(4)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText(title: "تقييم",size: 12,color: Colors.black87,),
+                MyText(
+                  title: tr(context, "rate"),
+                  size: 12,
+                  color: Colors.black87,
+                ),
                 InkWell(
-                  child: Icon(Icons.close,size: 25,color: Colors.black87,),
-                  onTap: ()=>Navigator.of(context).pop(),
+                  child: Icon(
+                    Icons.close,
+                    size: 25,
+                    color: Colors.black87,
+                  ),
+                  onTap: () => Navigator.of(context).pop(),
                 )
               ],
             ),
           ),
-
           content: Container(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                BlocBuilder<RateUserCubit,RateUserState>(
+                BlocBuilder<RateUserCubit, RateUserState>(
                   bloc: rateUserCubit,
-                  builder: (context,state){
+                  builder: (context, state) {
                     return Container(
                       margin: EdgeInsets.symmetric(vertical: 15),
                       child: RatingBar.builder(
@@ -236,27 +265,21 @@ class _UserProductsState extends State<UserProducts> with UserProductsData {
                           Icons.star,
                           color: Colors.amber,
                         ),
-                        onRatingUpdate: (rating) => rateUserCubit.onUpdateRateValue(rating),
+                        onRatingUpdate: (rating) =>
+                            rateUserCubit.onUpdateRateValue(rating),
                       ),
                     );
                   },
                 ),
-
-                DefaultButton(title: "ارسال", onTap: ()=>setUserRate(context,widget.userId,addOwnerCubit))
+                DefaultButton(
+                    title: tr(context, "send"),
+                    onTap: () =>
+                        setUserRate(context, widget.userId, addOwnerCubit))
               ],
             ),
           ),
-
         );
       },
     );
   }
-
-
 }
-
-
-
-
-
-

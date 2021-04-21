@@ -10,30 +10,27 @@ import 'package:base_flutter/general/widgets/MyText.dart';
 
 import 'RegisterCompleteData.dart';
 
-
-
 class RegisterComplete extends StatefulWidget {
   final RegisterModel model;
 
-  const RegisterComplete({Key key,@required this.model}) : super(key: key);
+  const RegisterComplete({Key key, @required this.model}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState()=>_RegisterState();
-
+  State<StatefulWidget> createState() => _RegisterState();
 }
 
-class _RegisterState extends State<RegisterComplete>{
-
+class _RegisterState extends State<RegisterComplete> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: RegisterCompleteData.scaffold,
       backgroundColor: MyColors.white,
       body: ListView(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
         padding: EdgeInsets.only(bottom: 20),
         children: <Widget>[
-
           HeaderLogo(),
 
           //form inputs
@@ -47,7 +44,7 @@ class _RegisterState extends State<RegisterComplete>{
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       MyText(
-                        title:tr(context,"register"),
+                        title: tr(context, "register"),
                         size: 16,
                         color: MyColors.primary,
                         alien: TextAlign.center,
@@ -60,23 +57,28 @@ class _RegisterState extends State<RegisterComplete>{
                   child: Column(
                     children: [
                       LabelTextField(
-                        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         type: TextInputType.text,
-                        label: "اسم المستخدم",
+                        label: tr(context,"userName"),
                         isPassword: false,
                         controller: RegisterCompleteData.name,
                         action: TextInputAction.next,
-                        validate: (value)=> Validator(context).validateEmpty(value: value),
+                        validate: (value) =>
+                            Validator(context).validateEmpty(value: value),
                       ),
                       LabelTextField(
-                        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         type: TextInputType.text,
-                        label: tr(context,"password"),
+                        label: tr(context, "password"),
                         isPassword: true,
                         controller: RegisterCompleteData.password,
                         action: TextInputAction.done,
-                        onSubmit: ()=>RegisterCompleteData.setUserRegister(context,widget.model),
-                        validate: (value)=> Validator(context).validatePassword(value: value),
+                        onSubmit: () => RegisterCompleteData.setUserRegister(
+                            context, widget.model),
+                        validate: (value) =>
+                            Validator(context).validatePassword(value: value),
                       ),
                     ],
                   ),
@@ -86,14 +88,13 @@ class _RegisterState extends State<RegisterComplete>{
           ),
           //register button
           DefaultButton(
-            title: tr(context,"confirm"), //"تسجيل دخول",
+            title: tr(context, "confirm"), //"تسجيل دخول",
             margin: EdgeInsets.all(30),
-            onTap: ()=>RegisterCompleteData.setUserRegister(context,widget.model),
+            onTap: () =>
+                RegisterCompleteData.setUserRegister(context, widget.model),
           ),
-
         ],
       ),
     );
   }
-
 }

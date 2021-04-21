@@ -11,18 +11,19 @@ import 'package:base_flutter/general/widgets/HeaderLogo.dart';
 
 class RemotePage extends StatefulWidget {
   final PageModel page;
+
   const RemotePage({@required this.page});
+
   @override
   _RemotePageState createState() => _RemotePageState();
 }
 
 class _RemotePageState extends State<RemotePage> {
-
-  final RemotePageCubit remotePageCubit =new RemotePageCubit();
+  final RemotePageCubit remotePageCubit = new RemotePageCubit();
 
   @override
   void initState() {
-    remotePageCubit.fetchPageContent(context, widget.page.id,refresh: false);
+    remotePageCubit.fetchPageContent(context, widget.page.id, refresh: false);
     remotePageCubit.fetchPageContent(context, widget.page.id);
     super.initState();
   }
@@ -34,13 +35,14 @@ class _RemotePageState extends State<RemotePage> {
         title: widget.page.name, //"عن التطبيق"
         con: context,
       ),
-      body: BlocBuilder<RemotePageCubit,RemotePageState>(
+      body: BlocBuilder<RemotePageCubit, RemotePageState>(
         bloc: remotePageCubit,
-        builder: (context,state){
-          if(state is RemotePageUpdated){
+        builder: (context, state) {
+          if (state is RemotePageUpdated) {
             return ListView(
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              padding: EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
               children: [
                 HeaderLogo(),
                 Html(
@@ -54,7 +56,7 @@ class _RemotePageState extends State<RemotePage> {
                 ),
               ],
             );
-          }else{
+          } else {
             return Center(
               child: LoadingDialog.showLoadingView(),
             );
@@ -63,5 +65,4 @@ class _RemotePageState extends State<RemotePage> {
       ),
     );
   }
-
 }

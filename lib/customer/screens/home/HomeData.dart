@@ -12,10 +12,10 @@ class HomeData {
   int currentIndex=0;
 
   List<BottomTabModel> tabs = [
-    BottomTabModel(iconData: Icons.home,title: "الرئيسية",),
-    BottomTabModel(iconData: Icons.favorite,title: "المفضلة",),
-    BottomTabModel(iconData: Icons.notifications,title: "الإشعارات",),
-    BottomTabModel(iconData: Icons.mail_outline,title: "الرسائل",),
+    BottomTabModel(iconData: Icons.home,title: "home"),
+    BottomTabModel(iconData: Icons.favorite,title: "fav"),
+    BottomTabModel(iconData: Icons.notifications,title: "notifications"),
+    BottomTabModel(iconData: Icons.mail_outline,title: "messages"),
   ];
 
   void initBottomNavigation(TickerProvider ticker){

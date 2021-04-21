@@ -1,15 +1,14 @@
 part of 'MyProductsImports.dart';
 
-class MyProducts extends StatefulWidget  {
+class MyProducts extends StatefulWidget {
   @override
   _MyProductsState createState() => _MyProductsState();
 }
 
-class _MyProductsState extends State<MyProducts> with MyProductsData{
-
+class _MyProductsState extends State<MyProducts> with MyProductsData {
   @override
   void initState() {
-    myAdsCubit.fetchUserAds(context,refresh: false);
+    myAdsCubit.fetchUserAds(context, refresh: false);
     myAdsCubit.fetchUserAds(context);
     super.initState();
   }
@@ -18,20 +17,17 @@ class _MyProductsState extends State<MyProducts> with MyProductsData{
   Widget build(BuildContext context) {
     var user = context.watch<UserCubit>().state.model;
     return Scaffold(
-      appBar: DefaultAppBar(title: "اعلاناتي", con: context),
+      appBar: DefaultAppBar(title: tr(context, "myAds"), con: context),
       backgroundColor: MyColors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildHeaderView(user),
-          _buildProductListView()
-        ],
+        children: [_buildHeaderView(user), _buildProductListView()],
       ),
     );
   }
 
-  Widget _buildHeaderView(UserModel user){
+  Widget _buildHeaderView(UserModel user) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15),
       child: Column(
@@ -41,24 +37,36 @@ class _MyProductsState extends State<MyProducts> with MyProductsData{
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Icon(Icons.person_outline,size: 25,color: MyColors.black,),
+                child: Icon(
+                  Icons.person_outline,
+                  size: 25,
+                  color: MyColors.black,
+                ),
               ),
-              MyText(title: user.userName ,size: 10,color: MyColors.black,),
+              MyText(
+                title: user.userName,
+                size: 10,
+                color: MyColors.black,
+              ),
             ],
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText(title: user.publishDate,size: 10,color: MyColors.blackOpacity,),
+                MyText(
+                  title: user.publishDate,
+                  size: 10,
+                  color: MyColors.blackOpacity,
+                ),
                 RatingBar.builder(
                   initialRating: user.rate.toDouble(),
                   minRating: 1,
                   direction: Axis.horizontal,
                   allowHalfRating: true,
                   updateOnDrag: false,
-                  onRatingUpdate: (rate){},
+                  onRatingUpdate: (rate) {},
                   ignoreGestures: true,
                   itemCount: 5,
                   itemSize: 16,
@@ -76,28 +84,32 @@ class _MyProductsState extends State<MyProducts> with MyProductsData{
     );
   }
 
-  Widget _buildProductListView(){
-    return BlocBuilder<MyAdsCubit,MyAdsState>(
+  Widget _buildProductListView() {
+    return BlocBuilder<MyAdsCubit, MyAdsState>(
       bloc: myAdsCubit,
-      builder: (context,state){
-        if(state is MyAdsUpdated){
-          if(state.ads.length>0){
+      builder: (context, state) {
+        if (state is MyAdsUpdated) {
+          if (state.ads.length > 0) {
             return _buildProductsView(state.ads);
-          }else{
+          } else {
             return Expanded(
               child: Center(
-                child: MyText(title: "لايوجد بيانات",size: 12,color: MyColors.blackOpacity,),
+                child: MyText(
+                  title: tr(context, "NoData"),
+                  size: 12,
+                  color: MyColors.blackOpacity,
+                ),
               ),
             );
           }
-        }else{
+        } else {
           return _buildLoadingView();
         }
       },
     );
   }
 
-  Widget _buildLoadingView(){
+  Widget _buildLoadingView() {
     return Expanded(
       child: Center(
         child: LoadingDialog.showLoadingView(),
@@ -105,16 +117,18 @@ class _MyProductsState extends State<MyProducts> with MyProductsData{
     );
   }
 
-  Widget _buildProductsView(List<EditAdModel> ads){
+  Widget _buildProductsView(List<EditAdModel> ads) {
     return Flexible(
       child: CustomPullRefresh(
         controller: refreshController,
-        onRefresh: ()=> myAdsCubit.setRefreshUserAds(context,refreshController),
+        onRefresh: () =>
+            myAdsCubit.setRefreshUserAds(context, refreshController),
         child: ListView.builder(
           itemCount: ads.length,
-          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-          itemBuilder: (context,index){
-            AdsModel adsModel=AdsModel(
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
+          itemBuilder: (context, index) {
+            AdsModel adsModel = AdsModel(
               title: ads[index].title,
               id: ads[index].id,
               lng: ads[index].lng,
@@ -133,21 +147,20 @@ class _MyProductsState extends State<MyProducts> with MyProductsData{
             return Slidable(
               actionPane: SlidableDrawerActionPane(),
               actionExtentRatio: 0.25,
-              child: ProductRow(index: index,model: adsModel),
+              child: ProductRow(index: index, model: adsModel),
               secondaryActions: <Widget>[
                 IconSlideAction(
-                  caption: 'حذف',
+                  caption: tr(context, "delete"),
                   color: Colors.red,
                   icon: Icons.delete,
-                  onTap: ()=>_buildConfirmRemoveAd(ads[index]),
+                  onTap: () => _buildConfirmRemoveAd(ads[index]),
                 ),
                 IconSlideAction(
-                  caption: 'تعديل',
+                  caption: tr(context, "update"),
                   color: Colors.blueAccent,
                   icon: Icons.edit,
-                  onTap: ()=>navigateTo(context,ads[index]),
+                  onTap: () => navigateTo(context, ads[index]),
                 ),
-
               ],
             );
           },
@@ -156,17 +169,11 @@ class _MyProductsState extends State<MyProducts> with MyProductsData{
     );
   }
 
-  void _buildConfirmRemoveAd(EditAdModel model){
+  void _buildConfirmRemoveAd(EditAdModel model) {
     LoadingDialog.showConfirmDialog(
-        context: context,
-        title: "تأكيد حذف الإعلان",
-        confirm: ()=>myAdsCubit.stRemoveMyAd(context, model)
+      context: context,
+      title: tr(context, "confirmDeleteAds"),
+      confirm: () => myAdsCubit.stRemoveMyAd(context, model),
     );
   }
-
-
 }
-
-
-
-

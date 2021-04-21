@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:base_flutter/general/utilities/localization/LocalizationMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:base_flutter/customer/models/Dtos/LocationModel.dart';
 import 'package:base_flutter/customer/screens/location_address/location_cubit/location_cubit.dart';

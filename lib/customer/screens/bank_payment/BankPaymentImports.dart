@@ -1,4 +1,5 @@
 import 'package:base_flutter/general/blocs/lang_cubit/lang_cubit.dart';
+import 'package:base_flutter/general/utilities/localization/LocalizationMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:base_flutter/customer/models/BankModel.dart';

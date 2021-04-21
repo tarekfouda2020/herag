@@ -17,7 +17,7 @@ class _AddOffersState extends State<AddOffers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(title: "اضافة عرض", con: context),
+      appBar: DefaultAppBar(title: tr(context,"addOffer"), con: context),
       body: BlocBuilder<OfferHeadersCubit,OfferHeadersState>(
         bloc: context.watch<OfferHeadersCubit>(),
         builder: (context,state){

@@ -7,36 +7,34 @@ import 'package:flutter/material.dart';
 import 'package:base_flutter/general/widgets/DefaultAppBar.dart';
 import 'package:base_flutter/general/widgets/MyText.dart';
 
-
-class Terms extends StatefulWidget{
-
+class Terms extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _TermsState();
   }
-
 }
 
-class _TermsState extends State<Terms>{
-
+class _TermsState extends State<Terms> {
   GlobalKey<ScaffoldState> _scaffold = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(
-        title: tr(context,"terms"), //"الشروط والأحكام",
+        title: tr(context, "terms"), //"الشروط والأحكام",
         con: context,
       ),
       key: _scaffold,
       body: FutureBuilder<String>(
         future: GeneralRepository(context).terms(),
-        builder: (con,snapshot){
-          if(snapshot.hasData){
+        builder: (con, snapshot) {
+          if (snapshot.hasData) {
             return ListView(
-              physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              padding: EdgeInsets.symmetric(vertical: 20,horizontal: 15),
+              physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics(),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
               children: [
                 MyText(
                   title: snapshot.data,
@@ -45,7 +43,7 @@ class _TermsState extends State<Terms>{
                 ),
               ],
             );
-          }else{
+          } else {
             return Center(
               child: LoadingDialog.showLoadingView(),
             );

@@ -13,45 +13,39 @@ import 'package:base_flutter/general/widgets/DefaultButton.dart';
 import 'package:base_flutter/general/widgets/HeaderLogo.dart';
 import 'package:base_flutter/general/widgets/MyText.dart';
 
-
 class ActiveAccount extends StatefulWidget {
   final RegisterModel model;
 
-  const ActiveAccount({Key key,@required this.model}) : super(key: key);
+  const ActiveAccount({Key key, @required this.model}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState()=> _ActiveAccountState();
+  State<StatefulWidget> createState() => _ActiveAccountState();
 }
 
 class _ActiveAccountState extends State<ActiveAccount> {
+  final GlobalKey<ScaffoldState> scaffold = new GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
+  final TextEditingController code = new TextEditingController();
+  RegisterModel model;
 
-   final GlobalKey<ScaffoldState> scaffold = new GlobalKey<ScaffoldState>();
-   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-   final TextEditingController code = new TextEditingController();
-   RegisterModel model;
-
-   void setRegisterModel(RegisterModel registerModel){
-    model=registerModel;
+  void setRegisterModel(RegisterModel registerModel) {
+    model = registerModel;
   }
 
-
-   void setActiveUser(BuildContext context) async {
+  void setActiveUser(BuildContext context) async {
     FocusScope.of(context).requestFocus(FocusNode());
-    if(formKey.currentState.validate()){
-      if(code.text==model.code){
+    if (formKey.currentState.validate()) {
+      if (code.text == model.code) {
         AutoRouter.of(context).push(RegisterCompleteRoute(model: model));
-      }else{
-        LoadingDialog.showToastNotification("ادخل الكود صحيحا");
+      } else {
+        LoadingDialog.showToastNotification(tr(context, "codeValidation"));
       }
-
     }
-
   }
 
-
-   void setResendCode(BuildContext context) async {
+  void setResendCode(BuildContext context) async {
     FocusScope.of(context).requestFocus(FocusNode());
     CustomerRepository(context).resendCode(model);
-
   }
 
   @override
@@ -65,11 +59,11 @@ class _ActiveAccountState extends State<ActiveAccount> {
     return Scaffold(
       key: scaffold,
       backgroundColor: MyColors.white,
-      body:  ListView(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      body: ListView(
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         padding: EdgeInsets.only(bottom: 20),
         children: <Widget>[
-
           HeaderLogo(),
 
           //form inputs
@@ -83,7 +77,7 @@ class _ActiveAccountState extends State<ActiveAccount> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       MyText(
-                        title:tr(context,"activeAccount"),
+                        title: tr(context, "activeAccount"),
                         size: 16,
                         color: MyColors.primary,
                         alien: TextAlign.center,
@@ -97,20 +91,22 @@ class _ActiveAccountState extends State<ActiveAccount> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       MyText(
-                        title: "ادخل كود التحقق 1234",
+                        title: tr(context, "insertConfirmCode"),
                         size: 12,
                         color: MyColors.primary,
                         alien: TextAlign.center,
                       ),
                       LabelTextField(
-                        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         type: TextInputType.phone,
-                        label: "${tr(context,"activeCode")}",
+                        label: "${tr(context, "activeCode")}",
                         isPassword: false,
                         controller: code,
                         action: TextInputAction.done,
-                        onSubmit: ()=>setActiveUser(context),
-                        validate: (value)=> Validator(context).validateEmpty(value: value),
+                        onSubmit: () => setActiveUser(context),
+                        validate: (value) =>
+                            Validator(context).validateEmpty(value: value),
                       ),
                     ],
                   ),
@@ -120,19 +116,21 @@ class _ActiveAccountState extends State<ActiveAccount> {
           ),
           //register button
           DefaultButton(
-            title: tr(context,"continue"), //"تسجيل دخول",
+            title: tr(context, "continue"), //"تسجيل دخول",
             margin: EdgeInsets.all(30),
-            onTap: ()=>setActiveUser(context),
+            onTap: () => setActiveUser(context),
           ),
           //register text link
           Container(
-            margin: EdgeInsets.symmetric(vertical: 20,),
+            margin: EdgeInsets.symmetric(
+              vertical: 20,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 MyText(
-                  title: "لم استلم الرسالة ؟",
+                  title: tr(context,"neverReceiveMsg"),
                   size: 10,
                   color: Colors.grey,
                 ),
@@ -140,20 +138,17 @@ class _ActiveAccountState extends State<ActiveAccount> {
                   width: 5,
                 ),
                 InkWell(
-                    onTap: ()=>setResendCode(context),
+                    onTap: () => setResendCode(context),
                     child: MyText(
-                      title: tr(context,"resend"),
+                      title: tr(context, "resend"),
                       size: 10,
                       color: MyColors.primary,
                     )),
               ],
             ),
           ),
-
         ],
       ),
     );
   }
-
-
 }

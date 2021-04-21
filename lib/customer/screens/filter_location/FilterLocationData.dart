@@ -39,9 +39,8 @@ class FilterLocationData {
 
   Future<String> getAddress(LatLng latLng, BuildContext context) async {
     final coordinates = new Coordinates(latLng.latitude, latLng.longitude);
-    List<Address> addresses =
-        await Geocoder.google(apiKey, language: "ar")
-            .findAddressesFromCoordinates(coordinates);
+    List<Address> addresses = await Geocoder.google(apiKey, language: "ar")
+        .findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
     print("${first.featureName} : ${first.addressLine}");
     return first.addressLine;
@@ -56,8 +55,9 @@ class FilterLocationData {
         infoWindow: InfoWindow(
           title: element.title,
           anchor: Offset(0, 0),
-          snippet: "رقم الاعلان : ${element.id}",
-          onTap: () => AutoRouter.of(context).push(ProductDetailsRoute(model: element, info: element.info)),
+          snippet: "${tr(context, "adsNumb")} : ${element.id}",
+          onTap: () => AutoRouter.of(context)
+              .push(ProductDetailsRoute(model: element, info: element.info)),
         ),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
       ));
@@ -80,12 +80,12 @@ class FilterLocationData {
     ));
   }
 
-  // void autoCompleteSearch(Place place, BuildContext context) async {
-  //   final geolocation = await place.geolocation;
-  //   final GoogleMapController controller = await _controller.future;
-  //   controller.animateCamera(CameraUpdate.newLatLng(geolocation.coordinates));
-  //   controller
-  //       .animateCamera(CameraUpdate.newLatLngBounds(geolocation.bounds, 0));
-  //   getLocationAddress(geolocation.coordinates, context);
-  // }
+// void autoCompleteSearch(Place place, BuildContext context) async {
+//   final geolocation = await place.geolocation;
+//   final GoogleMapController controller = await _controller.future;
+//   controller.animateCamera(CameraUpdate.newLatLng(geolocation.coordinates));
+//   controller
+//       .animateCamera(CameraUpdate.newLatLngBounds(geolocation.bounds, 0));
+//   getLocationAddress(geolocation.coordinates, context);
+// }
 }

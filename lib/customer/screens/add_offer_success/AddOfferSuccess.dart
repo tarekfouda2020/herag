@@ -12,11 +12,11 @@ class AddOfferSuccess extends StatelessWidget {
           Spacer(),
           Image(image: AssetImage(Res.success),width: 150,height: 150,),
           SizedBox(height: 15,),
-          MyText(title: "تم اضافة الإعلان بنجاح",size: 12,color: MyColors.white,),
+          MyText(title: tr(context,"adsAddedSuccessfully"),size: 12,color: MyColors.white,),
           Spacer(),
           DefaultButton(
               margin: EdgeInsets.all(20),
-              title: "الرجوع للرئيسية",
+              title: tr(context,"backHome"),
               borderColor: MyColors.black,
               onTap: (){
                 HomeMainData.pagingController.refresh();

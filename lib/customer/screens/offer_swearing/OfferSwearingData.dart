@@ -14,7 +14,7 @@ class OfferSwearingData{
       AutoRouter.of(context).push(AddOfferImagesRoute(model: model)
       );
     }else{
-      LoadingDialog.showSimpleToast("قم بالموافقة علي الإتفاقية");
+      LoadingDialog.showSimpleToast(tr(context,"agreeToAgreement"));
     }
   }
 }

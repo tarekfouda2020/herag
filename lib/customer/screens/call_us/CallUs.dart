@@ -16,7 +16,7 @@ class _CallUsState extends State<CallUs> with CallUsData {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(
-        title: "تواصل معنا",
+        title: tr(context,"contactWithUs"),
         con: context,
       ),
       key: _scaffold,
@@ -37,7 +37,7 @@ class _CallUsState extends State<CallUs> with CallUsData {
             child: Column(
               children: [
                 DropdownTextField<DropDownModel>(
-                  label: "اسم المنطقة",
+                  label: tr(context,"deptName"),
                   dropKey: reason,
                   margin: EdgeInsets.symmetric(vertical: 10),
                   onChange: setSelectReason,
@@ -67,7 +67,7 @@ class _CallUsState extends State<CallUs> with CallUsData {
                   builder: (_, state) {
                     return InkWellTextField(
                       controller: callFile,
-                      label: "حدد ملف",
+                      label: tr(context,"selectFile"),
                       type: TextInputType.text,
                       icon: Icon(Icons.attach_file),
                       onTab: showFileTypeDialog,
@@ -82,7 +82,7 @@ class _CallUsState extends State<CallUs> with CallUsData {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: MyText(
-                    title: "او عبر الوسائل التالية",
+                    title: tr(context,"orVia"),
                   ),
                 ),
                 BlocBuilder<CallSocialCubit, CallSocialState>(
@@ -171,14 +171,14 @@ class _CallUsState extends State<CallUs> with CallUsData {
   void showFileTypeDialog() {
     ModalHelper.showModal(
       context: context,
-      title: "حدد نو الملف",
+      title: tr(context,"fileType"),
       expand: false,
       content: Container(
         height: 200,
         child: Column(
           children: [
             DefaultButton(
-              title: "صورة",
+              title: tr(context,"image"),
               margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
               onTap: ()=> setCallFile(FileType.image,context),
               borderColor: MyColors.primary,
@@ -186,7 +186,7 @@ class _CallUsState extends State<CallUs> with CallUsData {
               textColor: MyColors.primary,
             ),
             DefaultButton(
-              title: "ملف",
+              title: tr(context,"file"),
               margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
               onTap: ()=> setCallFile(FileType.any,context),
               borderColor: MyColors.primary,

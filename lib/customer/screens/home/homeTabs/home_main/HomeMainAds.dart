@@ -1,6 +1,5 @@
 part of 'HomeMainImports.dart';
 
-
 class HomeMainAds extends StatefulWidget {
   final int catId;
 
@@ -11,30 +10,26 @@ class HomeMainAds extends StatefulWidget {
 }
 
 class _HomeMainAdsState extends State<HomeMainAds> with HomeMainData {
-
   @override
   void initState() {
     super.initState();
-    HomeMainData.brandsCubit.onUpdateBrands([],0);
-    HomeMainData.pagingController=PagingController(
-        firstPageKey: 1);
-    HomeMainData.regionId=0;
-    HomeMainData.cityId=0;
-    fetchPage(1,context,refresh: false);
+    HomeMainData.brandsCubit.onUpdateBrands([], 0);
+    HomeMainData.pagingController = PagingController(firstPageKey: 1);
+    HomeMainData.regionId = 0;
+    HomeMainData.cityId = 0;
+    fetchPage(1, context, refresh: false);
     HomeMainData.pagingController.addPageRequestListener((pageKey) {
-      fetchPage(pageKey,context);
+      fetchPage(pageKey, context);
     });
   }
-  final GlobalKey<DropdownSearchState<DropDownModel>> region= new GlobalKey();
-  final GlobalKey<DropdownSearchState<DropDownModel>> city= new GlobalKey();
-  final GlobalKey<DropdownSearchState<Category>> brand= new GlobalKey();
 
-
-
+  final GlobalKey<DropdownSearchState<DropDownModel>> region = new GlobalKey();
+  final GlobalKey<DropdownSearchState<DropDownModel>> city = new GlobalKey();
+  final GlobalKey<DropdownSearchState<Category>> brand = new GlobalKey();
 
   void setSelectBrand(Category model) {
     HomeMainData.currentCat =
-    model == null ? HomeMainData.brandsCubit.state.parentId : model.id;
+        model == null ? HomeMainData.brandsCubit.state.parentId : model.id;
     HomeMainData.pagingController.refresh();
   }
 
@@ -54,12 +49,12 @@ class _HomeMainAdsState extends State<HomeMainAds> with HomeMainData {
     return Column(
       children: [
         _buildFilterView(context),
-        BlocBuilder<ProductViewsCubit,ProductViewsState>(
+        BlocBuilder<ProductViewsCubit, ProductViewsState>(
           bloc: productViewsCubit,
-          builder: (context , state){
-            if(state.showGrid){
+          builder: (context, state) {
+            if (state.showGrid) {
               return _buildGridProductView();
-            }else{
+            } else {
               return _buildRowProductView();
             }
           },
@@ -68,28 +63,27 @@ class _HomeMainAdsState extends State<HomeMainAds> with HomeMainData {
     );
   }
 
-  Widget _buildFilterView(BuildContext context){
+  Widget _buildFilterView(BuildContext context) {
     return Container(
       height: 50,
       padding: EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
           color: Colors.white,
-          border: Border(
-              bottom: BorderSide(color: MyColors.greyWhite,width: 1)
-          )
-      ),
+          border:
+              Border(bottom: BorderSide(color: MyColors.greyWhite, width: 1))),
       child: Row(
         children: [
           Flexible(
             child: DropdownTextField<DropDownModel>(
               dropKey: region,
-              label: "اسم المنطقة",
+              label: tr(context, "deptName"),
               fontSize: 10,
               labelSize: 10,
               margin: EdgeInsets.symmetric(horizontal: 5),
               onChange: setSelectRegion,
               downIconPadding: EdgeInsets.all(0),
-              finData: (filter)async=> await CustomerRepository(context).getRegionData(),
+              finData: (filter) async =>
+                  await CustomerRepository(context).getRegionData(),
             ),
           ),
           BlocBuilder<BrandsCubit, BrandsState>(
@@ -99,7 +93,7 @@ class _HomeMainAdsState extends State<HomeMainAds> with HomeMainData {
                 return Flexible(
                   child: DropdownTextField<Category>(
                     dropKey: brand,
-                    label: "الموديل",
+                    label: tr(context, "model"),
                     fontSize: 10,
                     labelSize: 10,
                     downIconPadding: EdgeInsets.all(0),
@@ -113,13 +107,14 @@ class _HomeMainAdsState extends State<HomeMainAds> with HomeMainData {
                 return Flexible(
                   child: DropdownTextField<DropDownModel>(
                     dropKey: city,
-                    label: "المدينة",
+                    label: tr(context, "city"),
                     fontSize: 10,
                     labelSize: 10,
                     downIconPadding: EdgeInsets.all(0),
                     margin: EdgeInsets.symmetric(horizontal: 5),
-                    onChange: setSelectCity ,
-                    finData: (filter)async=> await CustomerRepository(context).getCitiesData(HomeMainData.regionId.toString()),
+                    onChange: setSelectCity,
+                    finData: (filter) async => await CustomerRepository(context)
+                        .getCitiesData(HomeMainData.regionId.toString()),
                   ),
                 );
               }
@@ -130,15 +125,14 @@ class _HomeMainAdsState extends State<HomeMainAds> with HomeMainData {
           _buildFilterItem(
             icon: Icons.location_city,
             bgColor: MyColors.greyWhite,
-            onTab:()=> navigateToLocationAddress(context),
+            onTab: () => navigateToLocationAddress(context),
           ),
-          BlocBuilder<ProductViewsCubit,ProductViewsState>(
+          BlocBuilder<ProductViewsCubit, ProductViewsState>(
             bloc: productViewsCubit,
-            builder: (context,state){
+            builder: (context, state) {
               return _buildFilterItem(
-                  icon: state.showGrid?Icons.menu:Icons.view_module_rounded,
-                  onTab: ()=>changeProductView(context)
-              );
+                  icon: state.showGrid ? Icons.menu : Icons.view_module_rounded,
+                  onTab: () => changeProductView(context));
             },
           ),
         ],
@@ -146,7 +140,7 @@ class _HomeMainAdsState extends State<HomeMainAds> with HomeMainData {
     );
   }
 
-  Widget _buildFilterItem({IconData icon, Function onTab,Color bgColor}){
+  Widget _buildFilterItem({IconData icon, Function onTab, Color bgColor}) {
     return InkWell(
       onTap: onTab,
       child: Container(
@@ -155,46 +149,57 @@ class _HomeMainAdsState extends State<HomeMainAds> with HomeMainData {
         width: 40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: bgColor?? MyColors.greyWhite,
-            borderRadius: BorderRadius.circular(10)
+            color: bgColor ?? MyColors.greyWhite,
+            borderRadius: BorderRadius.circular(10)),
+        child: Icon(
+          icon,
+          size: 20,
+          color: MyColors.blackOpacity,
         ),
-        child: Icon(icon,size: 20,color: MyColors.blackOpacity,),
       ),
     );
   }
 
-  Widget _buildRowProductView(){
+  Widget _buildRowProductView() {
     return Flexible(
-      child: PagedListView<int , AdsModel>(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      child: PagedListView<int, AdsModel>(
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         pagingController: HomeMainData.pagingController,
         builderDelegate: PagedChildBuilderDelegate<AdsModel>(
-          noItemsFoundIndicatorBuilder: (context)=>_buildNoItemFound(),
-          itemBuilder: (context, item, index) => ProductRow(index: index,model: item,),
+          noItemsFoundIndicatorBuilder: (context) => _buildNoItemFound(),
+          itemBuilder: (context, item, index) => ProductRow(
+            index: index,
+            model: item,
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildGridProductView(){
+  Widget _buildGridProductView() {
     return Flexible(
-      child: PagedListView<int , AdsModel>(
-        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      child: PagedListView<int, AdsModel>(
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
         pagingController: HomeMainData.pagingController,
         builderDelegate: PagedChildBuilderDelegate<AdsModel>(
-          noItemsFoundIndicatorBuilder: (context)=>_buildNoItemFound(),
-            firstPageProgressIndicatorBuilder: (_) => LoadingDialog.showLoadingView(),
-            itemBuilder: (context, item, index) => ProductGrid(index: index,model: item,),
+          noItemsFoundIndicatorBuilder: (context) => _buildNoItemFound(),
+          firstPageProgressIndicatorBuilder: (_) =>
+              LoadingDialog.showLoadingView(),
+          itemBuilder: (context, item, index) => ProductGrid(
+            index: index,
+            model: item,
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildNoItemFound(){
+  Widget _buildNoItemFound() {
     return NoData(
-      title: 'لا يوجد اعلانات',
-      message: 'انتظر اضافة اعلانات لهذا القسم قريبا',
+      title: tr(context, "noAds"),
+      message: tr(context, "waitAddAds"),
     );
   }
-
 }

@@ -28,7 +28,7 @@ class EditImagesData{
     var images=editImagesCubit.state.images;
     var exists=existImageCubit.state.images;
     if((images.length+exists.length) > 5){
-      LoadingDialog.showSimpleToast("ادخل علي الاكثر ٥ صور");
+      LoadingDialog.showSimpleToast(tr(context,"enterAtLeastImage"));
       return;
     }
     if(images.length>0||exists.length>0){
@@ -40,7 +40,7 @@ class EditImagesData{
       AutoRouter.of(context).push(EditOfferLocationRoute(model: model,adModel: adsDataModel)
       );
     }else{
-      LoadingDialog.showSimpleToast("قم بادخال صور الإعلان");
+      LoadingDialog.showSimpleToast(tr(context,"enterAdsImg"));
     }
 
   }

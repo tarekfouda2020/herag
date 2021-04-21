@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:base_flutter/general/utilities/localization/LocalizationMethods.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -15,29 +16,29 @@ class FollowedCars extends StatelessWidget {
       children: [
         Flexible(
             child: ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              itemCount: 4,
-              itemBuilder: (context,index){
-                return _buildCarItem(index,context);
-              },
-            )
-        ),
-        DefaultButton(title: "متابعة السيارات الجديدة", onTap: ()=>AutoRouter.of(context).push(AddCarFollowerRoute()))
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          itemCount: 4,
+          itemBuilder: (context, index) {
+            return _buildCarItem(index, context);
+          },
+        )),
+        DefaultButton(
+            title: tr(context, "followNewCars"),
+            onTap: () => AutoRouter.of(context).push(AddCarFollowerRoute()))
       ],
     );
   }
 
-  Widget _buildCarItem(int index,BuildContext context){
+  Widget _buildCarItem(int index, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Slidable(
         actionPane: SlidableDrawerActionPane(),
         actionExtentRatio: 0.25,
         child: InkWell(
-          onTap: ()=>AutoRouter.of(context).push(AddCarFollowerRoute()),
+          onTap: () => AutoRouter.of(context).push(AddCarFollowerRoute()),
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
-
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
@@ -45,30 +46,39 @@ class FollowedCars extends StatelessWidget {
                   BoxShadow(
                       color: MyColors.greyWhite,
                       blurRadius: 1.2,
-                      spreadRadius: 1.2
-                  )
-                ]
-            ),
+                      spreadRadius: 1.2)
+                ]),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText(title: "كورلا",size: 11,color: MyColors.blackOpacity,),
-                MyText(title: "2020",size: 11,color: MyColors.blackOpacity,),
-                MyText(title: "الرياض",size: 11,color: MyColors.blackOpacity,),
+                MyText(
+                  title: "كورلا",
+                  size: 11,
+                  color: MyColors.blackOpacity,
+                ),
+                MyText(
+                  title: "2020",
+                  size: 11,
+                  color: MyColors.blackOpacity,
+                ),
+                MyText(
+                  title: "الرياض",
+                  size: 11,
+                  color: MyColors.blackOpacity,
+                ),
               ],
             ),
           ),
         ),
         secondaryActions: <Widget>[
           IconSlideAction(
-            caption: 'Remove',
+            caption: tr(context, "remove"),
             color: Colors.red,
             icon: Icons.delete,
-            onTap: (){},
+            onTap: () {},
           ),
         ],
       ),
     );
   }
-
 }

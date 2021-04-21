@@ -1,23 +1,21 @@
 part of 'EditOfferLocImports.dart';
 
-
 class EditOfferLocation extends StatefulWidget {
   final UpdateAdModel model;
   final AdsDataModel adModel;
-  const EditOfferLocation({@required this.model,@required this.adModel});
+
+  const EditOfferLocation({@required this.model, @required this.adModel});
+
   @override
   _AddOfferLocationState createState() => _AddOfferLocationState();
 }
 
-class _AddOfferLocationState extends State<EditOfferLocation> with EditOfferLocData {
-
+class _AddOfferLocationState extends State<EditOfferLocation>
+    with EditOfferLocData {
   @override
   void initState() {
-    LocationModel locationModel = LocationModel(
-        widget.model.lat,
-        widget.model.lng,
-        ""
-    );
+    LocationModel locationModel =
+        LocationModel(widget.model.lat, widget.model.lng, "");
     context.read<LocationCubit>().onLocationUpdated(locationModel);
     super.initState();
   }
@@ -26,81 +24,91 @@ class _AddOfferLocationState extends State<EditOfferLocation> with EditOfferLocD
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffold,
-      appBar: DefaultAppBar(title: "تفاصيل الإعلان", con: context),
+      appBar: DefaultAppBar(title: tr(context, "adsDetails"), con: context),
       body: ListView(
         children: [
           _buildDropDownInputs(),
-          BlocConsumer<LocationCubit,LocationState>(
-            listener: (context,state){
-              address.text=state.model.address;
+          BlocConsumer<LocationCubit, LocationState>(
+            listener: (context, state) {
+              address.text = state.model.address;
             },
-            builder: (context,state){
+            builder: (context, state) {
               return InkWellTextField(
                 controller: address,
-                margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                icon: Icon(Icons.location_pin,size: 20,color: MyColors.black,),
-                label: "الموقع",
-                onTab: ()=>navigateToLocationAddress(context),
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                icon: Icon(
+                  Icons.location_pin,
+                  size: 20,
+                  color: MyColors.black,
+                ),
+                label: tr(context, "location"),
+                onTab: () => navigateToLocationAddress(context),
               );
             },
           )
         ],
       ),
-
       bottomNavigationBar: _buildNavButton(context),
     );
   }
 
-  Widget _buildDropDownInputs(){
+  Widget _buildDropDownInputs() {
     return Form(
       key: formKey,
       child: Column(
         children: [
           DropdownTextField<DropDownModel>(
-            label: "اسم المنطقة",
+            label: tr(context, "deptName"),
             dropKey: region,
-            margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             onChange: setSelectRegion,
-            finData: (filter)async=> await CustomerRepository(context).getRegionData(),
-            validate: (value)=>Validator(context).validateDropDown<DropDownModel>(model: value),
+            finData: (filter) async =>
+                await CustomerRepository(context).getRegionData(),
+            validate: (value) => Validator(context)
+                .validateDropDown<DropDownModel>(model: value),
           ),
           DropdownTextField<DropDownModel>(
-            label: "اسم المدينة",
+            label: tr(context, "cityName"),
             dropKey: city,
-            margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             onChange: setSelectCity,
-            validate: (value)=>Validator(context).validateDropDown<DropDownModel>(model: value),
-            finData: (filter)async=> await CustomerRepository(context).getCitiesData(regionId),
+            validate: (value) => Validator(context)
+                .validateDropDown<DropDownModel>(model: value),
+            finData: (filter) async =>
+                await CustomerRepository(context).getCitiesData(regionId),
           ),
           DropdownTextField<DropDownModel>(
-            label: "اسم الحي",
+            label: tr(context, "neighborhoodName"),
             dropKey: neighbor,
-            margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             onChange: setSelectNeighbor,
-            validate: (value)=>Validator(context).validateDropDown<DropDownModel>(model: value),
-            finData: (filter)async=> await CustomerRepository(context).getNeighborsData(cityId),
+            validate: (value) => Validator(context)
+                .validateDropDown<DropDownModel>(model: value),
+            finData: (filter) async =>
+                await CustomerRepository(context).getNeighborsData(cityId),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildNavButton(BuildContext context){
+  Widget _buildNavButton(BuildContext context) {
     return InkWell(
-      onTap: ()=>navigateToAddDetails(widget.model,widget.adModel,context),
+      onTap: () => navigateToAddDetails(widget.model, widget.adModel, context),
       child: Container(
         height: 50,
         decoration: BoxDecoration(
           color: MyColors.primary,
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(20),
-              topLeft: Radius.circular(20)
-          ),
+              topRight: Radius.circular(20), topLeft: Radius.circular(20)),
         ),
         alignment: Alignment.center,
-        child: MyText(title: "استمرار",size: 12,color: MyColors.white,),
+        child: MyText(
+          title: tr(context, "continue"),
+          size: 12,
+          color: MyColors.white,
+        ),
       ),
     );
   }
-
 }

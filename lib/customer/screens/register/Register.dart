@@ -18,34 +18,30 @@ import 'register_cubit/register_cubit.dart';
 
 class Register extends StatefulWidget {
   @override
-  State<StatefulWidget> createState()=>_RegisterState();
-
+  State<StatefulWidget> createState() => _RegisterState();
 }
 
-class _RegisterState extends State<Register>{
+class _RegisterState extends State<Register> {
+  final GlobalKey<ScaffoldState> scaffold = new GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
+  final TextEditingController phone = new TextEditingController();
+  final RegisterCubit registerCubit = new RegisterCubit();
 
-   final GlobalKey<ScaffoldState> scaffold = new GlobalKey<ScaffoldState>();
-   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-   final TextEditingController phone = new TextEditingController();
-   final RegisterCubit registerCubit = new RegisterCubit();
-
-
-   void setUserRegister(BuildContext context) async {
+  void setUserRegister(BuildContext context) async {
     FocusScope.of(context).requestFocus(FocusNode());
-    if(formKey.currentState.validate()){
-      if(!registerCubit.state.terms){
-        LoadingDialog.showToastNotification("قم بالموافقة علي الشروط والأحكام");
+    if (formKey.currentState.validate()) {
+      if (!registerCubit.state.terms) {
+        LoadingDialog.showToastNotification(tr(context, "checkTerms"));
         return;
       }
       registerCubit.onChangeLoadingState();
-      RegisterModel result= await CustomerRepository(context).sendCode(phone.text);
+      RegisterModel result =
+          await CustomerRepository(context).sendCode(phone.text);
       registerCubit.onChangeLoadingState();
-      if(result!=null){
+      if (result != null) {
         AutoRouter.of(context).push(ActiveAccountRoute(model: result));
       }
-
     }
-
   }
 
   @override
@@ -53,19 +49,19 @@ class _RegisterState extends State<Register>{
     return Scaffold(
       key: scaffold,
       backgroundColor: MyColors.white,
-      body: BlocBuilder<RegisterCubit,RegisterState>(
+      body: BlocBuilder<RegisterCubit, RegisterState>(
           bloc: registerCubit,
-          builder: (con,state){
+          builder: (con, state) {
             return IgnorePointer(
               ignoring: state.loading,
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: ListView(
-                  physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
                   padding: EdgeInsets.only(bottom: 20),
                   children: <Widget>[
-
                     HeaderLogo(),
 
                     //form inputs
@@ -79,7 +75,7 @@ class _RegisterState extends State<Register>{
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 MyText(
-                                  title:tr(context,"register"),
+                                  title: tr(context, "register"),
                                   size: 16,
                                   color: MyColors.primary,
                                   alien: TextAlign.center,
@@ -92,21 +88,31 @@ class _RegisterState extends State<Register>{
                             child: Column(
                               children: [
                                 LabelTextField(
-                                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
                                   type: TextInputType.phone,
-                                  label: "${tr(context,"phone")}",
+                                  label: "${tr(context, "phone")}",
                                   isPassword: false,
                                   controller: phone,
                                   action: TextInputAction.done,
-                                  onSubmit: ()=>setUserRegister(context),
-                                  validate: (value)=> Validator(context).validatePhone(value: value),
+                                  onSubmit: () => setUserRegister(context),
+                                  validate: (value) => Validator(context)
+                                      .validatePhone(value: value),
                                 ),
                                 Row(
                                   children: [
-                                    Checkbox(value: state.terms, onChanged: (val)=>registerCubit.onChangeTermsState()),
+                                    Checkbox(
+                                        value: state.terms,
+                                        onChanged: (val) =>
+                                            registerCubit.onChangeTermsState()),
                                     InkWell(
-                                        onTap: ()=> AutoRouter.of(context).push(TermsRoute()),
-                                        child: MyText(title: "اوافق علي الشروط والأحكام",size: 10,color: MyColors.blackOpacity,)
+                                      onTap: () => AutoRouter.of(context)
+                                          .push(TermsRoute()),
+                                      child: MyText(
+                                        title: tr(context, "iAcceptTerms"),
+                                        size: 10,
+                                        color: MyColors.blackOpacity,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -119,9 +125,9 @@ class _RegisterState extends State<Register>{
                     //register button
                     Visibility(
                       child: DefaultButton(
-                        title: tr(context,"continue"), //"تسجيل دخول",
+                        title: tr(context, "continue"), //"تسجيل دخول",
                         margin: EdgeInsets.all(30),
-                        onTap: ()=>setUserRegister(context),
+                        onTap: () => setUserRegister(context),
                       ),
                       visible: !state.loading,
                       replacement: Padding(
@@ -134,13 +140,15 @@ class _RegisterState extends State<Register>{
                     ),
                     //register text link
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 20,),
+                      margin: EdgeInsets.symmetric(
+                        vertical: 20,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           MyText(
-                            title: tr(context,"haveAccount"),
+                            title: tr(context, "haveAccount"),
                             size: 10,
                             color: Colors.grey,
                           ),
@@ -148,22 +156,20 @@ class _RegisterState extends State<Register>{
                             width: 5,
                           ),
                           InkWell(
-                              onTap: ()=>AutoRouter.of(context).pop(),
+                              onTap: () => AutoRouter.of(context).pop(),
                               child: MyText(
-                                title: tr(context,"login"),
+                                title: tr(context, "login"),
                                 size: 10,
                                 color: MyColors.primary,
                               )),
                         ],
                       ),
                     ),
-
                   ],
                 ),
               ),
             );
-          }
-      ),
+          }),
     );
   }
 
