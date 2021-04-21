@@ -52,7 +52,7 @@ class DioHelper {
         LoadingDialog.showToastNotification(data["msg"].toString());
       }
     } on DioError catch (e) {
-      if (e.response.statusCode == 401 || e.response.statusCode == 301) {
+      if (e.response.statusCode == 401 || e.response.statusCode == 301|| e.response.statusCode == 302) {
         logout();
       } else {
         LoadingDialog.showToastNotification(tr(context, "chickNet"));
@@ -75,7 +75,7 @@ class DioHelper {
       if (response.data["key"] == 1) return response.data;
     } on DioError catch (e) {
       EasyLoading.dismiss();
-      if (e.response.statusCode == 401 || e.response.statusCode == 301) {
+      if (e.response.statusCode == 401 || e.response.statusCode == 301|| e.response.statusCode == 302) {
         logout();
       } else {
         LoadingDialog.showToastNotification(tr(context, "chickNet"));
@@ -129,7 +129,7 @@ class DioHelper {
       if (response.data["key"] == 1) return response.data;
     } on DioError catch (e) {
       EasyLoading.dismiss();
-      if (e.response.statusCode == 401 || e.response.statusCode == 301) {
+      if (e.response.statusCode == 401 || e.response.statusCode == 301|| e.response.statusCode == 302) {
         logout();
       } else {
         LoadingDialog.showToastNotification(tr(context, "chickNet"));

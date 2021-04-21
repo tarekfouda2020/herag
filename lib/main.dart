@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           theme: MainData.defaultThem,
-          title: "Base Flutter",
+          title: "حراج اوامر",
             supportedLocales: [
               Locale('en', 'US'),
               Locale('ar', 'EG')

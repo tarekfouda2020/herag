@@ -337,7 +337,7 @@ class CustomerAdsMethods{
     if(_data!=null){
       return List<EditAdModel>.from(_data["data"].map((e) => EditAdModel.fromMap(e)));
     }else{
-      return null;
+      return [];
     }
   }
 
