@@ -1,6 +1,7 @@
 part of 'HomeImports.dart';
 
 class HomeData {
+
   final GlobalKey<ScaffoldState> scaffold = new GlobalKey();
   final HomeTabCubit homeTabCubit = new HomeTabCubit();
   AnimationController animationController;
