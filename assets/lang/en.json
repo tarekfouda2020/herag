@@ -442,7 +442,8 @@
   "addAdsDept": "add sub department for ads",
   "selectRegion": "select region",
   "similarAds": "similar ads ",
-  "ads": "ads"
+  "ads": "ads",
+  "searchText": "Search text"
 }
 
 

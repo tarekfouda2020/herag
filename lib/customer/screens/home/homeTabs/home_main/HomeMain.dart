@@ -85,7 +85,7 @@ class _HomeMainState extends State<HomeMain>
       title: IconTextFiled(
         controller: search,
         margin: EdgeInsets.only(top: 25),
-        label: "كلمة البحث",
+        label: tr(context, "searchText"),
         submit: (value) => onSelectModel(context),
         type: TextInputType.text,
         action: TextInputAction.search,
@@ -207,7 +207,7 @@ class _HomeMainState extends State<HomeMain>
           0,
           Category(
               id: 0,
-              name: "الكل",
+              name: tr(context, "all"),
               img: "",
               parentId: parent,
               selected: true,
