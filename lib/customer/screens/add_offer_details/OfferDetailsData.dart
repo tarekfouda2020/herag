@@ -17,11 +17,11 @@ class OfferDetailsData {
   String lastCat;
 
   List<DropDownModel> get replyOptions => [
-        DropDownModel(name: tr(context, "yes"), id: 1),
-        DropDownModel(name: tr(context, "no"), id: 0),
+        DropDownModel(name: "yes", id: 1),
+        DropDownModel(name: "no", id: 0),
       ];
 
-  DropDownModel reply = DropDownModel(name: tr(context, "yes"), id: 1);
+  DropDownModel reply = DropDownModel(name: "yes", id: 1);
 
   void setDeptChanged(Category model, BuildContext context) async {
     clearChildrenData();
