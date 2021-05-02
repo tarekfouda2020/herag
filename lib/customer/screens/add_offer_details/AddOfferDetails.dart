@@ -237,7 +237,7 @@ class _AddOfferDetailsState extends State<AddOfferDetails>
               label: tr(context, "wantOpenComments"),
               useName: true,
               selectedItem: replyOptions.first,
-              data: replyOptions,
+              data: replyOptions.map((e) => DropDownModel(id: e.id,name: tr(context,e.name),selected: e.selected)).toList(),
               margin: EdgeInsets.symmetric(vertical: 10),
               validate: (value) => Validator(context)
                   .validateDropDown<DropDownModel>(model: value),
